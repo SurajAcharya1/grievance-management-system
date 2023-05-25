@@ -1,1 +1,43 @@
-<p>sign-up works!</p>
+<div class="main">
+  <div class="sign-up-card">
+    <div>
+      <span class="sign-up-text">Sign Up</span>
+    </div>
+    <form (submit)="onSubmit()">
+      <div class="sign-up-form">
+        <span class="name-icon fa fa-solid fa-user"></span>
+        <input
+          class="name"
+          type="text"
+          placeholder="Name">
+        <span class="username-icon fa fa-solid fa-user"></span>
+        <input
+          class="username"
+          type="text"
+          placeholder="Username">
+        <span class="email-icon fa fa-solid fa-envelope"></span>
+        <input
+          class="email"
+          type="email"
+          placeholder="Email">
+        <span class="password-icon fa fa-solid fa-key"></span>
+        <input
+          class="password"
+          type="password"
+          placeholder="Password">
+        <span class="confirm-password-icon fa fa-solid fa-key"></span>
+        <input
+          class="confirm-password"
+          type="password"
+          placeholder="Confirm Password">
+      </div>
+      <div style="margin-top: 190px; margin-left: 150px">
+        <span style="font-size: 12px">Already have an account? </span><a [routerLink]="['']" style="color: black; cursor: pointer"><span
+        style="text-align: right; font-weight: bolder"><u>Login</u></span></a>
+      </div>
+      <button
+        class="sign-up-button"
+        type="submit">Register</button>
+    </form>
+  </div>
+</div>

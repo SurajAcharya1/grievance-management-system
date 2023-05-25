@@ -1,0 +1,18 @@
+<div class="article-card mt-5 row" *ngFor="let article of articles; let i = index">
+  {{setVotes(article?.upvotes, i)}}
+  <div class="col-md-1">
+    <div class="ms-4 mt-2">
+      <a class="fa fa-solid fa-arrow-up" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[i] && voteType[i] ? 'blue' : 'gray'}" (click)="upVote(i)"></a>
+      <div>{{votes[i]}}</div>
+      <a class="fa fa-solid fa-arrow-down" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[i] && !voteType[i] ? 'red' : 'gray'}" (click)="downVote(i)"></a>
+    </div>
+  </div>
+  <div class="col-md-11 mt-2">
+    <div>
+      <h4>{{article?.title}}</h4>
+    </div>
+    <div>
+      {{article?.content}}
+    </div>
+  </div>
+</div>

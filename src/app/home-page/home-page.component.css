@@ -1,6 +1,6 @@
 .main {
   position: absolute;
-  background-color: #B1B9E3;
+  background-color: #dedfe0;
   opacity: 100%;
   width: 100%;
   height: 100%;
@@ -71,27 +71,41 @@
   left: 60px;
 }
 
-.email {
+.user-icon {
   position: relative;
   top: 35px;
-  left: 35px;
+  left: 50px;
+}
+
+.email {
+  position: relative;
+  padding-left: 35px;
+  top: 35px;
+  left: 23px;
   width: 400px;
   height: 40px;
-  background-color: #B1B9E3;
-  opacity: 50%;
+  background-color: #dedfe0;
+  opacity: 65%;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   color: #000000;
 }
 
+.password-icon {
+  position: absolute;
+  top: 97px;
+  left: 50px;
+}
+
 .password {
   position: relative;
+  padding-left: 35px;
   top: 45px;
   left: 35px;
   width: 400px;
   height: 40px;
-  background-color: #B1B9E3;
-  opacity: 50%;
+  background-color: #dedfe0;
+  opacity: 65%;
   border-radius: 50px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   color: #000000;
@@ -125,7 +139,7 @@ input {
   left: 200px;
   font-size: 18px;
   font-family: Arial;
-  background-color: #8A9AED;
+  background-color: #385dc5;
   width: 200px;
   height: 35px;
   border-radius: 50px;
@@ -133,6 +147,11 @@ input {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   color: white;
   font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #385dc5;
+  opacity: 80%;
 }
 
 .copyright {

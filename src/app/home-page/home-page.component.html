@@ -15,37 +15,39 @@
           <a href="#" style="color: black"><span>About</span></a>
         </div>
         <div class="col-md-2">
-          <a href="#" style="color: #000000"><span>Sign Up</span></a>
+          <a  [routerLink]="['sign-up']"  style="color: black"><span>Sign Up</span></a>
         </div>
       </div>
       <div>
         <span class="login-text">Login</span>
       </div>
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (submit)="submit()">
         <div class="login-form">
+          <span class="user-icon fa fa-solid fa-user"></span>
           <input
             class="email"
-            type="text"
-            placeholder="E-mail"
-            formControlName="email">
+            type="email"
+            placeholder="Email"
+            formControlName="email" required>
+          <span class="password-icon fa fa-solid fa-key"></span>
           <input
             class="password"
             type="password"
             placeholder="Password"
-            formControlName="password">
+            formControlName="password" required>
         </div>
         <div class="sign-up-forgot-password row">
           <div class="col-md-6">
-            <span style="font-size: 12px">Haven't registered yet? </span><a (click)="openSignupModel()" style="color: black"><span
-            style="text-align: right; font-weight: bolder">Sign up</span></a>
+            <span style="font-size: 12px">Haven't registered yet? </span><a [routerLink]="['sign-up']" style="color: black; cursor:pointer;"><span
+            style="text-align: right; font-weight: bolder"><u>Sign up</u></span></a>
           </div>
           <div class="col-md-6">
-            <a href="#" style="color: black"><span style="text-align: right; font-weight: bolder; font-size: 12px">Forgot Password?</span></a>
+            <a [routerLink]="['forgot-password']" style="color: black"><span style="text-align: right; font-weight: bolder; font-size: 12px">Forgot Password?</span></a>
           </div>
         </div>
         <button
           class="login-button"
-          type="submit" (click)="submit()">Login</button>
+          type="submit">Login</button>
       </form>
       <div class="copyright">
         <span>
