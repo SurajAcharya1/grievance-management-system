@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../apiService";
+import {LocalStorageUtil} from "../../localStorageUtil";
+import {NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'app-home-page',
@@ -10,15 +13,17 @@ import {HttpClient} from "@angular/common/http";
 })
 export class HomePageComponent {
   title = 'grievance-management-system';
-  temail = 'a';
-  tpassword = 'a';
 
   loginForm: FormGroup = new FormGroup<any>({});
+  userDetails: any;
+  isSubmitted: boolean = false;
 
   constructor(
     private client: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
+    private apiService: ApiService,
+    private toastService: NgToastService
   ) { }
 
   ngOnInit() {
@@ -27,42 +32,47 @@ export class HomePageComponent {
 
   buildForm() {
     this.loginForm = this.formBuilder.group({
-      email: [undefined],
-      password: [undefined]
+      email: [undefined, [Validators.required, Validators.email]],
+      password: [undefined, [Validators.required, Validators.minLength(8)]]
     });
   }
 
   submit() {
-    const e = (this?.loginForm?.get('email')?.value);
-    const p = (this.loginForm.get('password')?.value);
-    let data: any;
-    const loginData =
-      {
-        email:e,
-        password:p
-      };
-    console.log(e);
-    console.log(p);
-    this.client.post('http://localhost:8000/api/login', loginData).subscribe(res => {
-      data = res;
-      console.log(res);
-      this.getUser();
-      this.router.navigate(['dashboard']);
-    }, error => {
-      console.log(error);
-      alert('login failed');
-    });
-    /*if(this?.loginForm?.get('email')?.value === this.temail && this?.loginForm?.get('password')?.value === this.tpassword) {
-      this.router.navigate(['dashboard']);
+    this.isSubmitted = true;
+    if (this.loginForm.invalid) {
+      return
     } else {
-    }*/
+      let token: any = '';
+      const userCredentials =
+        {
+          email: (this?.loginForm?.get('email')?.value),
+          password: (this.loginForm.get('password')?.value)
+        };
+      this.apiService.login(userCredentials).subscribe(res => {
+        token = res;
+        this.getUser(token.jwt);
+      }, error => {
+        this.toastService.error({detail: 'error', summary: 'log in failed', duration: 2000});
+        console.log(error);
+      });
+    }
   }
 
-  getUser() {
-    this.client.get('http://localhost:8000/api/user').subscribe(res => {
-      console.log(res);
+  getUser(token: string) {
+    this.apiService.getLoggedInUserDetails().subscribe(res => {
+      this.userDetails = res;
+      const storage = LocalStorageUtil.getStorage();
+      storage.id = this.userDetails.id;
+      storage.name = this.userDetails.name;
+      storage.email = this.userDetails.email;
+      storage.is_admin = this.userDetails.is_admin;
+      storage.is_approved = this.userDetails.is_approved;
+      storage.token = token;
+      LocalStorageUtil.setStorage(storage);
+      this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
+      this.router.navigate(['dashboard']);
     }, error => {
       console.log(error);
-    })
+    });
   }
 }

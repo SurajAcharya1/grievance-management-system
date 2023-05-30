@@ -1,4 +1,4 @@
-.main {
+/*.main {
   position: absolute;
   background-color: #dedfe0;
   opacity: 100%;
@@ -163,4 +163,20 @@
 .sign-up-button:hover {
   background-color: #385dc5;
   opacity: 70%;
+}*/
+
+divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
 }

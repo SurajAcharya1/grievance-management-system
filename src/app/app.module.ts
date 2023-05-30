@@ -12,6 +12,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { BodyComponent } from './body/body.component';
 import {HttpClientModule} from "@angular/common/http";
+import {NgToastModule} from "ng-angular-popup";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {HttpClientModule} from "@angular/common/http";
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        NgToastModule
     ],
   providers: [],
   bootstrap: [AppComponent]

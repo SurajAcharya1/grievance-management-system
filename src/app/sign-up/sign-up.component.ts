@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {ApiService} from "../../apiService";
+import {NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'app-sign-up',
@@ -7,13 +12,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor() { }
+  isSubmitted: boolean = false;
+  registerForm: FormGroup = new FormGroup<any>({});
+
+  constructor(private httpClient: HttpClient,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private apiService: ApiService,
+              private toastService: NgToastService) { }
 
   ngOnInit(): void {
+    this.buildForm();
   }
 
-  onSubmit() {
+  buildForm() {
+    this.registerForm = this.formBuilder.group({
+      name: [undefined, Validators.required],
+      email: [undefined, [Validators.required, Validators.email]],
+      password: [undefined, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [undefined, [Validators.required, Validators.minLength(8)]]
+    });
+  }
 
+  submit() {
+    this.isSubmitted = true;
+    if (this.registerForm.invalid) {
+      return
+    } else {
+      const userDetails =
+        {
+          name: this?.registerForm?.get('name')?.value,
+          email: this?.registerForm?.get('email')?.value,
+          password: this?.registerForm?.get('password')?.value
+        }
+        this.apiService.register(userDetails).subscribe( res => {
+          // this.toastService.success({detail: 'Success', summary: 'User Registration Successful', duration: 2000});
+          this.toastService.info({detail: 'Information', summary: 'User has to be approved by admin to log into the system.', duration: 15000});
+          this.router.navigate(['']);
+        }, error => {
+          console.log(error);
+          this.toastService.error({detail: 'Error', summary: 'User Registration failed', duration: 2000});
+        })
+
+    }
   }
 
 }

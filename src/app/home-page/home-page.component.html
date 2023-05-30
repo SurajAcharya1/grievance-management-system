@@ -1,3 +1,4 @@
+<!--
 <div class="main">
   <div class="row login-card">
     <div class="picture-background-div">
@@ -21,20 +22,22 @@
       <div>
         <span class="login-text">Login</span>
       </div>
-      <form [formGroup]="loginForm" (submit)="submit()">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
         <div class="login-form">
           <span class="user-icon fa fa-solid fa-user"></span>
           <input
             class="email"
+            [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['email'].errors}"
             type="email"
             placeholder="Email"
-            formControlName="email" required>
+            formControlName="email">
+          <span *ngIf="isSubmitted && loginForm.controls['email'].errors">Email is required</span>
           <span class="password-icon fa fa-solid fa-key"></span>
           <input
             class="password"
             type="password"
             placeholder="Password"
-            formControlName="password" required>
+            formControlName="password">
         </div>
         <div class="sign-up-forgot-password row">
           <div class="col-md-6">
@@ -56,99 +59,114 @@
       </div>
     </div>
   </div>
-</div>
-
-<!--<div class="container">
-  <div class="forms-container">
-    <div class="signin-signup">
-      <form action="#" class="sign-in-form">
-        <h2 class="title">Sign in</h2>
-        <div class="input-field">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" />
-        </div>
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password" />
-        </div>
-        <input type="submit" value="Login" class="btn solid" />
-        <p class="social-text">Or Sign in with social platforms</p>
-        <div class="social-media">
-          <a href="#" class="social-icon">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-google"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </div>
-      </form>
-      <form action="#" class="sign-up-form">
-        <h2 class="title">Sign up</h2>
-        <div class="input-field">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" />
-        </div>
-        <div class="input-field">
-          <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="Email" />
-        </div>
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password" />
-        </div>
-        <input type="submit" class="btn" value="Sign up" />
-        <p class="social-text">Or Sign up with social platforms</p>
-        <div class="social-media">
-          <a href="#" class="social-icon">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-google"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="panels-container">
-    <div class="panel left-panel">
-      <div class="content">
-        <h3>New here ?</h3>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-          ex ratione. Aliquid!
-        </p>
-        <button class="btn transparent" id="sign-up-btn">
-          Sign up
-        </button>
-      </div>
-      <img src="img/log.svg" class="image" alt="" />
-    </div>
-    <div class="panel right-panel">
-      <div class="content">
-        <h3>One of us ?</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-          laboriosam ad deleniti.
-        </p>
-        <button class="btn transparent" id="sign-in-btn">
-          Sign in
-        </button>
-      </div>
-      <img src="img/register.svg" class="image" alt="" />
-    </div>
-  </div>
 </div>-->
 
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="../assets/login.png" class="img-fluid"
+             alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+          <!--<div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-twitter"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-linkedin-in"></i>
+            </button>
+          </div>-->
+
+          <!--<div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+          </div>-->
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label mb-1" for="form3Example3">Email address</label>
+            <input type="email" id="form3Example3" class="form-control form-control-lg"
+                   [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['email'].errors}"
+                   formControlName="email"
+                   placeholder="Enter a valid email address"/>
+            <div *ngIf="isSubmitted && loginForm.controls['email'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && loginForm.controls['email'].errors['required']">
+                Email is required
+              </div>
+              <div *ngIf="isSubmitted && loginForm.controls['email'].errors['email']">
+                Enter valid email address
+              </div>
+            </div>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <label class="form-label mb-1" for="form3Example4">Password</label>
+            <input type="password" id="form3Example4" class="form-control form-control-lg"
+                   [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['password'].errors}"
+                   formControlName="password"
+                   placeholder="Enter password"/>
+            <div *ngIf="isSubmitted && loginForm.controls['password'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && loginForm.controls['password'].errors['required']">
+                Password is required
+              </div>
+              <div *ngIf="isSubmitted && loginForm.controls['password'].errors['minlength']">
+                Password must be at least 8 characters
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+              <label class="form-check-label" for="form2Example3">
+                Remember me
+              </label>
+            </div>
+            <a href="#!" class="text-body">Forgot password?</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a [routerLink]="['/sign-up']"
+                                                                              class="link-danger">Sign Up</a></p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--<div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    &lt;!&ndash; Copyright &ndash;&gt;
+    <div class="text-white mb-3 mb-md-0">
+      Copyright © 2020. All rights reserved.
+    </div>
+    &lt;!&ndash; Copyright &ndash;&gt;
+
+    &lt;!&ndash; Right &ndash;&gt;
+    <div>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="#!" class="text-white">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+    &lt;!&ndash; Right &ndash;&gt;
+  </div>-->
+</section>
