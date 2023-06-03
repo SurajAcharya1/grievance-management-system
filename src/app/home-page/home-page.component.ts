@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../apiService";
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {NgToastService} from "ng-angular-popup";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-home-page',
@@ -23,7 +24,8 @@ export class HomePageComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private apiService: ApiService,
-    private toastService: NgToastService
+    private toastService: NgToastService,
+    private ngxToastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class HomePageComponent {
         token = res;
         this.getUser(token.jwt);
       }, error => {
+        this.ngxToastr.info("jsdsjdfsdjfsdjfhsdjshdjfshdfjsdhfjsdhfsdhfsdfhsjdfhsdjfshdjfshdjfhsdjfsdf");
         this.toastService.error({detail: 'error', summary: 'log in failed', duration: 2000});
         console.log(error);
       });

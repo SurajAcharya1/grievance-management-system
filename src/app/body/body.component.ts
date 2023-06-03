@@ -9,7 +9,7 @@ export enum Vote {
 }
 
 @Component({
-  selector: 'app-dashboard-body',
+  selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css']
 })

@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {ApiService} from "../../apiService";
 import {NgToastService} from "ng-angular-popup";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private apiService: ApiService,
-              private toastService: NgToastService) { }
+              private toastService: NgToastService,
+              private ngxToast: ToastrService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -46,8 +48,8 @@ export class SignUpComponent implements OnInit {
           password: this?.registerForm?.get('password')?.value
         }
         this.apiService.register(userDetails).subscribe( res => {
-          // this.toastService.success({detail: 'Success', summary: 'User Registration Successful', duration: 2000});
-          this.toastService.info({detail: 'Information', summary: 'User has to be approved by admin to log into the system.', duration: 15000});
+          this.toastService.success({detail: 'Success', summary: 'User Registration Successful', duration: 2000});
+          this.ngxToast.info("User has to be approved by admin to log into the system.", "info");
           this.router.navigate(['']);
         }, error => {
           console.log(error);

@@ -13,6 +13,8 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { BodyComponent } from './body/body.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NgToastModule} from "ng-angular-popup";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,14 @@ import {NgToastModule} from "ng-angular-popup";
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        NgToastModule
+        NgToastModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+          positionClass: 'toast-top-left',
+          timeOut: 15000,
+          closeButton: true,
+          // progressBar: true,
+        }),
     ],
   providers: [],
   bootstrap: [AppComponent]
