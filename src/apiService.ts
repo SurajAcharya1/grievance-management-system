@@ -31,4 +31,12 @@ export class ApiService {
   register(userDetails: any) {
     return this.httpClient.post(ApiService.baseApi + 'register', userDetails);
   }
+
+  getRelatedArticles(id: number) {
+    return this.httpClient.get(ApiService.baseApi + 'articles/' + id + '/similar');
+  }
+
+  logout() {
+    return this.httpClient.post(ApiService.baseApi + 'logout', {}, {withCredentials: true})
+  }
 }

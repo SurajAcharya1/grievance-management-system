@@ -1,6 +1,7 @@
 export class LocalStorageUtil {
 
-  protected static readonly localStorageName = 'gmsLS'
+  protected static readonly localStorageName = 'gmsLS';
+  protected static readonly localStorageNameEmail = 'gmsLSE';
 
   public static getStorage(): LocalStorage {
     const userJson = localStorage.getItem(this.localStorageName);
@@ -15,6 +16,15 @@ export class LocalStorageUtil {
     LocalStorageUtil.setStorage(new LocalStorage());
   }
 
+  public static getEmailStorage(): LocalStorageEmail {
+    const emailJson = localStorage.getItem(this.localStorageNameEmail);
+    return emailJson !== null ? JSON.parse(emailJson) : new LocalStorageEmail();
+  }
+
+  public static setEmailStorage(data: LocalStorageEmail): void {
+    localStorage.setItem(this.localStorageNameEmail, JSON.stringify(data));
+  }
+
 }
 
 export class LocalStorage {
@@ -24,4 +34,8 @@ export class LocalStorage {
   is_admin!: boolean;
   is_approved!: boolean;
   token!: any
+}
+
+export class LocalStorageEmail {
+  rememberMeEmail!: string;
 }

@@ -20,18 +20,27 @@ export class BodyComponent implements OnInit {
   hasVoted: Array<boolean> = new Array<boolean>;
   voteType: Array<boolean> = new Array<boolean>;
   votes: Array<number> = new Array<number>;
+  isAdmin: boolean = false;
+  relatedArticles: any
+
+  hasPressed: boolean = false;
+
+  relatedArticleId: any;
+  relatedArticleTitle!: string;
 
   constructor(private apiService: ApiService,
               private toastService: NgToastService) { }
 
   ngOnInit(): void {
     this.getArticles();
+    this.isAdmin =  LocalStorageUtil.getStorage().is_admin ? true : false;
   }
 
   getArticles() {
     this.apiService.getArticles().subscribe(res => {
       this.articles = res;
-      }, (error) => {
+      console.log(this.articles);
+    }, (error) => {
       console.log(error);
       this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
       })
@@ -40,6 +49,7 @@ export class BodyComponent implements OnInit {
   upVote(id: number) {
     this.apiService.updateVote(id, { vote_type: Vote.upvote }).subscribe(res => {
       this.getArticles();
+      this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
       this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
     }, error => {
       console.log(error);
@@ -50,6 +60,7 @@ export class BodyComponent implements OnInit {
   downVote(id: number) {
     this.apiService.updateVote(id, {vote_type: Vote.downvote}).subscribe( res => {
       this.getArticles();
+      this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
       this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
     }, error => {
       console.log(error);
@@ -59,6 +70,24 @@ export class BodyComponent implements OnInit {
 
   setVotes(v: number, i:number) {
     this.votes[i] = v;
+  }
+
+  getRelatedArticles(id: number, title: string) {
+    this.apiService.getRelatedArticles(id).subscribe(res => {
+      this.relatedArticles = res;
+      this.hasPressed = true;
+      this.relatedArticles.push(title);
+      this.relatedArticleId = id;
+      this.relatedArticleTitle = title;
+      console.log(res);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  close() {
+    this.hasPressed = false;
+    this.relatedArticleId = null;
   }
 
 }

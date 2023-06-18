@@ -9,11 +9,15 @@ import {NgToastService} from "ng-angular-popup";
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
+  currentUser!: string;
+  isAdmin!: boolean;
 
   constructor(private router: Router,
               private toastService: NgToastService) { }
 
   ngOnInit(): void {
+    this.currentUser = LocalStorageUtil.getStorage().name;
+    this.isAdmin = LocalStorageUtil.getStorage().is_admin;
   }
 
   signOut() {

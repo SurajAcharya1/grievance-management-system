@@ -35,7 +35,8 @@ export class HomePageComponent {
   buildForm() {
     this.loginForm = this.formBuilder.group({
       email: [undefined, [Validators.required, Validators.email]],
-      password: [undefined, [Validators.required, Validators.minLength(8)]]
+      password: [undefined, [Validators.required, Validators.minLength(8)]],
+      rememberMe: [undefined]
     });
   }
 
@@ -53,8 +54,12 @@ export class HomePageComponent {
       this.apiService.login(userCredentials).subscribe(res => {
         token = res;
         this.getUser(token.jwt);
+        if (this?.loginForm?.get('rememberMe')?.value) {
+          const storage = LocalStorageUtil.getEmailStorage();
+          storage.rememberMeEmail = this?.loginForm?.get('email')?.value;
+          LocalStorageUtil.setEmailStorage(storage);
+        }
       }, error => {
-        this.ngxToastr.info("jsdsjdfsdjfsdjfhsdjshdjfshdfjsdhfjsdhfsdhfsdfhsjdfhsdjfshdjfshdjfhsdjfsdf");
         this.toastService.error({detail: 'error', summary: 'log in failed', duration: 2000});
         console.log(error);
       });

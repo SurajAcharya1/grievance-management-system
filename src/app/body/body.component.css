@@ -1,9 +1,53 @@
-/*@import "../dashboard.css";*/
-.article-card {
-  position: relative;
-  border-radius: 5px;
-  background-color: #ffffff;
-  width: 1050px;
-  height: 100px;
+.card-main:hover {
+  animation-duration: 0.3s;
+  animation-name: scaleAnimation;
+  animation-fill-mode: forwards;
+}
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1,1);
+  }
+  100% {
+    transform: scale(1.02,1.02);
+  }
+}
+
+.scrollable-section {
+  overflow: auto;
+  height: 91vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollable-section::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollable-section-similar-article {
+  overflow: auto;
+  height: 70vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 

@@ -1,13 +1,30 @@
 <div class="top-bar navbar navbar-dark sticky-top shadow-sm">
-<!--  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>-->
-  <div class="col-md-3"><span style="margin-left: 10rem"><img src="../assets/waveline.png"></span></div>
-  <i class="fa-solid fa-magnifying-glass fa-beat "></i>
-  <input class="col-md-6 w-25 form-control"
-         style="background: #f3f3f3; border: none;"
-         type="text"
-         placeholder="Search for Complaints"
-         aria-label="Search">
   <div class="col-md-3">
-      <a class="nav-link ms-3" (click)="signOut()">Sign out</a>
+    <span style="margin-left: 10rem">
+      <img src="../assets/waveline.png">
+    </span>
+  </div>
+  <div class="col-md-6 d-flex justify-content-center">
+    <input class="w-50 form-control"
+           style="background: #f3f3f3; border: none; font-family: 'Font Awesome 5 Free'"
+           type="text"
+           placeholder="Search for Complaints"
+           aria-label="Search">
+  </div>
+  <div class="col-md-3 text-start">
+      <div class="row" style="margin-left: 8rem">
+        <div class="col-md-4 text-end"><button class="border-0" style="border-radius: 100%; width: 50px; height: 50px; font-size: xx-large; background: #6ad7e5; color: #202226"><strong>{{currentUser.charAt(0) | titlecase}}</strong></button></div>
+        <div class="col-md-8" style="margin-left: -10px; cursor: pointer">
+          <span style="color: #211414">
+            <ng-container *ngIf="isAdmin; else el">
+            <h5>ADMIN</h5>
+            </ng-container>
+            <ng-template #el>
+              <h5>USER</h5>
+            </ng-template>
+          </span>
+          <h6 class="text-capitalize" style="margin-top: -5px; color: #211414">{{currentUser}}</h6>
+        </div>
+      </div>
   </div>
 </div>
