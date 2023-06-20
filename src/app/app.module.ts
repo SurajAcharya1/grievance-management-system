@@ -15,6 +15,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgToastModule} from "ng-angular-popup";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { PostGrievanceComponent } from './post-grievance/post-grievance.component';
+import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {ToastrModule} from "ngx-toastr";
     DashboardComponent,
     TopBarComponent,
     SideBarComponent,
-    BodyComponent
+    BodyComponent,
+    PostGrievanceComponent
   ],
     imports: [
         BrowserModule,
@@ -41,6 +44,8 @@ import {ToastrModule} from "ngx-toastr";
           closeButton: true,
           // progressBar: true,
         }),
+        NgbModule,
+        NgbTooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent]

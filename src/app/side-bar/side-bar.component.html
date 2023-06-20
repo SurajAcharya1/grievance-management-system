@@ -5,8 +5,8 @@
       </div>
       <div class="sidebar-nav">
         <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
-        <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-pen-to-square me-2"></span>Post Complaints</div>
-        <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-layer-group me-2"></span>My Complaints</div>
+        <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-pen-to-square me-2"></span>Post Grievance</div>
+        <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-layer-group me-2"></span>My Grievance</div>
         <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
       </div>
       <div (click)="signOut()" style="cursor: pointer; position: absolute; bottom: 15rem"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</div>

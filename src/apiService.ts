@@ -39,4 +39,17 @@ export class ApiService {
   logout() {
     return this.httpClient.post(ApiService.baseApi + 'logout', {}, {withCredentials: true})
   }
+
+  postArticle(article: any) {
+    return this.httpClient.post( ApiService.baseApi + 'articles/create/', article, {withCredentials: true})
+  }
+
+  forgotPassword(email: any) {
+    return this.httpClient.post(ApiService.baseApi + 'forgot-password/', email)
+  }
+
+  resetPassword(resetData: any) {
+    return this.httpClient.post(ApiService.baseApi + 'reset-password/', resetData)
+  }
+
 }

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../apiService";
-import {LocalStorageUtil} from "../../localStorageUtil";
+import {LocalStorageEmail, LocalStorageUtil} from "../../localStorageUtil";
 import {NgToastService} from "ng-angular-popup";
 import {ToastrService} from "ngx-toastr";
 
@@ -18,6 +18,8 @@ export class HomePageComponent {
   loginForm: FormGroup = new FormGroup<any>({});
   userDetails: any;
   isSubmitted: boolean = false;
+  rememberMe: boolean = false;
+  rememberedEmail: any;
 
   constructor(
     private client: HttpClient,
@@ -30,6 +32,12 @@ export class HomePageComponent {
 
   ngOnInit() {
     this.buildForm();
+    if (LocalStorageUtil.getEmailStorage().rememberMeEmail) {
+      this.rememberMe = true;
+      this.rememberedEmail = LocalStorageUtil.getEmailStorage().rememberMeEmail;
+      this.loginForm.get('email')?.patchValue(this.rememberedEmail);
+      this.loginForm.get('rememberMe')?.patchValue(true);
+    }
   }
 
   buildForm() {
@@ -58,6 +66,8 @@ export class HomePageComponent {
           const storage = LocalStorageUtil.getEmailStorage();
           storage.rememberMeEmail = this?.loginForm?.get('email')?.value;
           LocalStorageUtil.setEmailStorage(storage);
+        } else {
+          LocalStorageUtil.clearEmailStorage();
         }
       }, error => {
         this.toastService.error({detail: 'error', summary: 'log in failed', duration: 2000});

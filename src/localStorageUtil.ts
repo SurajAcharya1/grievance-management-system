@@ -25,6 +25,10 @@ export class LocalStorageUtil {
     localStorage.setItem(this.localStorageNameEmail, JSON.stringify(data));
   }
 
+  public static clearEmailStorage(): void {
+    LocalStorageUtil.setEmailStorage(new LocalStorageEmail());
+  }
+
 }
 
 export class LocalStorage {

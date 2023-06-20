@@ -7,14 +7,22 @@
           <div class="row">
             <div class="col-md-1 align-content-center">
               <div class="ms-3">
-                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-up" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[i] && voteType[i] ? 'blue' : 'gray'}" (click)="upVote(article.id)"></a></div>
+                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-up" style="text-decoration: none" (click)="upVote(article.id)"></a></div>
                 <div class="d-flex justify-content-center mt-1 mb-1"><span style="font-size: 17px; font-weight: 600">{{article?.vote}}</span></div>
-                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-down" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[i] && !voteType[i] ? 'red' : 'gray'}" (click)="downVote(article.id)"></a></div>
+                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-down" style="text-decoration: none" (click)="downVote(article.id)"></a></div>
               </div>
             </div>
             <div class="col-md-11">
               <div class="pe-5">
-                <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{article?.title}}</b></h4>
+                <div class="row">
+                  <div class="col-md-11">
+                    <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{article?.title}}</b></h4>
+                  </div>
+                  <div *ngIf="article?.author === loggedInUserId"
+                       class="col-md-1 d-flex justify-content-end">
+                    <span class="fa-solid fa-flag" ngbTooltip="Your Article" style="color: #3d5af1"></span>
+                  </div>
+                </div>
                 <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{article?.content}}</p>
               </div>
               <hr>
@@ -34,7 +42,7 @@
 
     <div [ngClass]="hasPressed ? 'col-md-5 scrollable-section ps-5' : 'col-md-3 scrollable-section'">
       <div class="d-flex justify-content-center">
-        <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;">+ Post new Complaint</button>
+        <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;" [routerLink]="['/post-grievance']">+ Post new Grievance</button>
       </div>
       <div class="card shadow p-3 d-flex justify-content-center me-3" *ngIf="hasPressed" style="border: none">
         <div class="row">
@@ -51,9 +59,9 @@
               <div class="card-body row">
                 <div class="col-md-1 align-content-center">
                   <div class="ms-3">
-                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-up" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[ii] && voteType[ii] ? 'blue' : 'gray'}" (click)="upVote(similar.id)"></a></div>
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-up" style="text-decoration: none" (click)="upVote(similar.id)"></a></div>
                     <div class="d-flex justify-content-center mt-1 mb-1"><span style="font-size: 17px; font-weight: 600">{{similar?.vote}}</span></div>
-                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-down" style="text-decoration: none" [ngStyle]="{'color' : hasVoted[ii] && !voteType[ii] ? 'red' : 'gray'}" (click)="downVote(similar.id)"></a></div>
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"><a class="fa fa-solid fa-arrow-down" style="text-decoration: none" (click)="downVote(similar.id)"></a></div>
                   </div>
                 </div>
                 <div class="col-md-11">
