@@ -19,7 +19,7 @@ export class BodyComponent implements OnInit {
   articles: any;
   hasUpVoted: Array<boolean> = new Array<boolean>;
   hasDownVoted: Array<boolean> = new Array<boolean>;
-  voteType: Array<boolean> = new Array<boolean>;
+  canUpvote: Array<boolean> = new Array<boolean>;
   votes: Array<number> = new Array<number>;
   isAdmin: boolean = false;
   relatedArticles: any;
@@ -65,30 +65,38 @@ export class BodyComponent implements OnInit {
       })
   }
 
-  upVote(id: number) {
-    this.apiService.updateVote(id, { vote_type: Vote.upvote }).subscribe(res => {
-      this.hasUpVoted = new Array<boolean>;
-      this.hasDownVoted = new Array<boolean>;
-      this.getArticles();
-      this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
-      this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
-    }, error => {
-      console.log(error);
-      this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
-    })
+  upVote(id: number, hasUpVoted: any) {
+    if (hasUpVoted) {
+      this.downVote(id, false);
+    } else {
+      this.apiService.updateVote(id, { vote_type: Vote.upvote }).subscribe(res => {
+        this.hasUpVoted = new Array<boolean>;
+        this.hasDownVoted = new Array<boolean>;
+        this.getArticles();
+        this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
+        this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
+      }, error => {
+        console.log(error);
+        this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
+      });
+    }
   }
 
-  downVote(id: number) {
-    this.apiService.updateVote(id, {vote_type: Vote.downvote}).subscribe( res => {
-      this.hasUpVoted = new Array<boolean>;
-      this.hasDownVoted = new Array<boolean>;
-      this.getArticles();
-      this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
-      this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
-    }, error => {
-      console.log(error);
-      this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
-    });
+  downVote(id: number, hasDownVoted: any) {
+    if (hasDownVoted) {
+      this.upVote(id, false);
+    } else {
+      this.apiService.updateVote(id, {vote_type: Vote.downvote}).subscribe( res => {
+        this.hasUpVoted = new Array<boolean>;
+        this.hasDownVoted = new Array<boolean>;
+        this.getArticles();
+        this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
+        this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
+      }, error => {
+        console.log(error);
+        this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
+      });
+    }
   }
 
   setVotes(v: number, i:number) {

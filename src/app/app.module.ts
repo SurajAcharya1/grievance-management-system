@@ -17,6 +17,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { PostGrievanceComponent } from './post-grievance/post-grievance.component';
 import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgxSpinnerModule} from "ngx-spinner";
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstra
     TopBarComponent,
     SideBarComponent,
     BodyComponent,
-    PostGrievanceComponent
+    PostGrievanceComponent,
+    SpinnerComponent,
   ],
     imports: [
         BrowserModule,
@@ -45,7 +48,10 @@ import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstra
           // progressBar: true,
         }),
         NgbModule,
-        NgbTooltipModule
+        NgbTooltipModule,
+        NgxSpinnerModule.forRoot({
+          type: 'ball-scale-multiple',
+        })
     ],
   providers: [],
   bootstrap: [AppComponent]
