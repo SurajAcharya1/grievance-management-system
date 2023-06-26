@@ -6,13 +6,17 @@ import {ForgotPasswordComponent} from "./forgot-password/forgot-password.compone
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {AuthGuard} from "./shared/auth.guard";
 import {PostGrievanceComponent} from "./post-grievance/post-grievance.component";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {AllUsersComponent} from "./all-users/all-users.component";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  {path: 'post-grievance', component: PostGrievanceComponent, canActivate: [AuthGuard]}
+  {path: 'post-grievance', component: PostGrievanceComponent, canActivate: [AuthGuard]},
+  {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard]},
+  {path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

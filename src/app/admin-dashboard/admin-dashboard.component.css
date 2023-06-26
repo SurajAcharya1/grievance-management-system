@@ -1,0 +1,8 @@
+.round:hover {
+  color: #fcfcfc;
+  background: #455be1;
+}
+
+.round {
+  border-radius: 10px;
+}

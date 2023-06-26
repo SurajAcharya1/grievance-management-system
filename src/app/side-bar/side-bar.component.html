@@ -1,14 +1,19 @@
-<div class="container-fluid ps-5">
-    <div class="sidebar scrollable-section">
-      <div class="sidebar-header">
-        <span style="margin-left: 2rem; font-size: 12px">MENU</span>
-      </div>
-      <div class="sidebar-nav">
-        <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
-        <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-pen-to-square me-2"></span>Post Grievance</div>
-        <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" *ngIf="!isAdmin"><span class="fa fa-layer-group me-2"></span>My Grievance</div>
-        <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
-      </div>
-      <div (click)="signOut()" style="cursor: pointer; position: absolute; bottom: 15rem"><i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out</div>
-    </div>
+<div class="sidebar scrollable-section">
+  <div class="sidebar-header">
+    <span style="margin-left: 2rem; font-size: 12px">MENU</span>
+  </div>
+  <div class="sidebar-nav ps-4" *ngIf="!isAdmin">
+    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
+    <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" ><span class="fa fa-pen-to-square me-2"></span>Post Grievance</div>
+    <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>My Grievance</div>
+    <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
+  </div>
+  <div class="sidebar-nav ps-4" *ngIf="isAdmin">
+    <div class="mb-3" [routerLink]="['/admin-dashboard']" routerLinkActive="active"><span class="fa fa-home me-2"></span>Dashboard</div>
+    <div class="mb-3" [routerLink]="['/users']" routerLinkActive="active"><span class="fa fa-users me-2"></span>Users</div>
+    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>All Grievance</div>
+    <div class="mb-3" [routerLink]="['/user-approval-request']" routerLinkActive="active" ><span class="fa fa-user-plus me-2"></span>Approval Requests</div>
+    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
+  </div>
+  <div (click)="signOut()" style="cursor: pointer; position: absolute; bottom: 15rem"><i class="fa-solid fa-right-from-bracket me-2 ps-4"></i>Sign Out</div>
 </div>

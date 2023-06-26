@@ -19,6 +19,8 @@ import { PostGrievanceComponent } from './post-grievance/post-grievance.componen
 import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgxSpinnerModule} from "ngx-spinner";
 import { SpinnerComponent } from './spinner/spinner.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     BodyComponent,
     PostGrievanceComponent,
     SpinnerComponent,
+    AdminDashboardComponent,
+    AllUsersComponent,
   ],
     imports: [
         BrowserModule,

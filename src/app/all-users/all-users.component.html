@@ -1,0 +1,44 @@
+<div>
+  <app-top-bar></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="col-md-12 d-flex justify-content-center mt-5 mb-5"><h1><strong>Registered User Details</strong></h1></div>
+    <div class="card card-body mt-5 me-5 ms-4 shadow" style="border: none">
+      <h4><strong>User Information</strong></h4>
+      <table class="table table-borderless table-hover">
+        <thead class="border-bottom">
+        <tr>
+          <th>S.N.</th>
+          <th>Name</th>
+          <th>E-mail</th>
+          <th>Type</th>
+          <th class="d-flex justify-content-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let users of users; let i = index">
+          <ng-container *ngIf="users.is_approved">
+            <td>{{i + 1}}</td>
+            <td>{{users.name}}</td>
+            <td>{{users.email}}</td>
+            <td>{{users.is_admin ? 'Admin' : 'User'}}</td>
+            <td class="d-flex justify-content-center">
+              <select class="form-select-sm me-3">
+                <option value="null" hidden>select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+<!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
+              <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete"></button>
+            </td>
+          </ng-container>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

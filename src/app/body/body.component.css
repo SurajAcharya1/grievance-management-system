@@ -51,3 +51,8 @@
   background-color: transparent;
 }
 
+
+.custom {
+  position: absolute;
+  right: 0;
+}

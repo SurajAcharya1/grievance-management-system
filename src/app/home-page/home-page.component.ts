@@ -88,7 +88,11 @@ export class HomePageComponent {
       storage.token = token;
       LocalStorageUtil.setStorage(storage);
       this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
-      this.router.navigate(['dashboard']);
+      if (LocalStorageUtil.getStorage().is_admin) {
+        this.router.navigate(['admin-dashboard']);
+      } else {
+        this.router.navigate(['dashboard']);
+      }
     }, error => {
       console.log(error);
     });

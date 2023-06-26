@@ -52,4 +52,12 @@ export class ApiService {
     return this.httpClient.post(ApiService.baseApi + 'reset-password/', resetData)
   }
 
+  getAllUsers() {
+    return this.httpClient.get (ApiService.baseApi + 'total-user', {withCredentials: true})
+  }
+
+  promoteDemoteUser(id: number, promoteDemoteData: any) {
+    return this.httpClient.post(ApiService.baseApi + 'user/' + id + '/promote-demote', promoteDemoteData,  {withCredentials: true})
+  }
+
 }
