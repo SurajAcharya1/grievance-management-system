@@ -21,6 +21,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { ApprovalRequestComponent } from './approval-request/approval-request.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AllUsersComponent } from './all-users/all-users.component';
     SpinnerComponent,
     AdminDashboardComponent,
     AllUsersComponent,
+    ApprovalRequestComponent,
+    AccountComponent,
   ],
     imports: [
         BrowserModule,

@@ -8,6 +8,8 @@ import {AuthGuard} from "./shared/auth.guard";
 import {PostGrievanceComponent} from "./post-grievance/post-grievance.component";
 import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 import {AllUsersComponent} from "./all-users/all-users.component";
+import {ApprovalRequestComponent} from "./approval-request/approval-request.component";
+import {AccountComponent} from "./account/account.component";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path: 'post-grievance', component: PostGrievanceComponent, canActivate: [AuthGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard]},
   {path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
+  {path: 'user-approval-request', component: ApprovalRequestComponent, canActivate: [AuthGuard]},
+  {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

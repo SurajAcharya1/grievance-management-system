@@ -5,8 +5,8 @@
   <div class="sidebar-nav ps-4" *ngIf="!isAdmin">
     <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
     <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" ><span class="fa fa-pen-to-square me-2"></span>Post Grievance</div>
-    <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>My Grievance</div>
-    <div class="mb-3" [routerLink]="['/forgot-password']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
+    <div class="mb-3" [routerLink]="['/my-grievances']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>My Grievance</div>
+    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
   </div>
   <div class="sidebar-nav ps-4" *ngIf="isAdmin">
     <div class="mb-3" [routerLink]="['/admin-dashboard']" routerLinkActive="active"><span class="fa fa-home me-2"></span>Dashboard</div>

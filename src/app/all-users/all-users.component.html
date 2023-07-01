@@ -33,7 +33,7 @@
                 <option value="user">User</option>
               </select>
 <!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
-              <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete"></button>
+              <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
             </td>
           </ng-container>
         </tr>

@@ -36,4 +36,14 @@ export class AllUsersComponent implements OnInit {
       console.log(error);
     })
   }
+
+  deleteUser(id: number) {
+    this.apiService.deleteUser(id).subscribe(res => {
+      this.toastr.success({detail: 'Success', summary: 'User Deleted Successfully', duration: 2000});
+      this.getUsers();
+    }, error => {
+      console.log(error);
+      this.toastr.error({detail: 'Error', summary: 'User Deletion failed', duration: 2000});
+    });
+  }
 }

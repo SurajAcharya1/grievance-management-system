@@ -12,7 +12,7 @@
            aria-label="Search">
   </div>
   <div class="col-md-3 text-start">
-      <div class="row" style="margin-left: 8rem">
+      <div class="row" style="margin-left: 8rem" [routerLink]="['/account']">
         <div class="col-md-4 text-end"><button class="border-0" style="border-radius: 100%; width: 50px; height: 50px; font-size: xx-large; background: #787d83; color: #202226"><strong>{{currentUser.charAt(0) | titlecase}}</strong></button></div>
         <div class="col-md-8" style="margin-left: -10px; cursor: pointer">
           <span style="color: #211414">

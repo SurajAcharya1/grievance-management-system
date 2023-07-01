@@ -60,4 +60,16 @@ export class ApiService {
     return this.httpClient.post(ApiService.baseApi + 'user/' + id + '/promote-demote', promoteDemoteData,  {withCredentials: true})
   }
 
+  deleteUser(userId: any) {
+    return this.httpClient.delete(ApiService.baseApi + 'user/delete/' + userId, {withCredentials: true})
+  }
+
+  getApprovalPendingUsers() {
+    return this.httpClient.get(ApiService.baseApi + 'approval-requests', {withCredentials: true})
+  }
+
+  approveUser( userId: any) {
+    return this.httpClient.post(ApiService.baseApi + 'approve-user/', userId, {withCredentials: true})
+  }
+
 }
