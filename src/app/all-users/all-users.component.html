@@ -19,22 +19,24 @@
           <th class="d-flex justify-content-center">Action</th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let users of users; let i = index">
-          <ng-container *ngIf="users.is_approved">
-            <td>{{i + 1}}</td>
-            <td>{{users.name}}</td>
-            <td>{{users.email}}</td>
-            <td>{{users.is_admin ? 'Admin' : 'User'}}</td>
-            <td class="d-flex justify-content-center">
-              <select class="form-select-sm me-3">
-                <option value="null" hidden>select Role</option>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
-<!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
-              <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
-            </td>
+        <tbody [formGroup]="userForm">
+        <tr *ngFor="let users of userForm.get('userRole')?.value; let i = index" formArrayName="userRole">
+          <ng-container [formGroupName]="i">
+            <ng-container *ngIf="users.is_approved">
+                          <td>{{i + 1}}</td>
+                          <td>{{users.name}}</td>
+                          <td>{{users.email}}</td>
+                          <td>{{users.roles}}</td>
+              <td class="d-flex justify-content-center">
+                <select class="form-select-sm me-3" formControlName="roles" (change)="updateRole(users.id, i)">
+                  <option value="null" hidden>select Role</option>
+                  <option value="Admin" [selected]="users.roles === 'Admin'">Admin</option>
+                  <option value="User" [selected]="users.roles === 'User'">User</option>
+                </select>
+                <!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
+                <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
+              </td>
+            </ng-container>
           </ng-container>
         </tr>
         </tbody>

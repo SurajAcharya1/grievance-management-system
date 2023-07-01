@@ -33,6 +33,9 @@
         </tr>
         </tbody>
       </table>
+      <tr *ngIf="approvalPendingUsers?.length === 0">
+        <h6 class=" d-flex justify-content-center">No pending approval requests</h6>
+      </tr>
     </div>
   </div>
 </div>

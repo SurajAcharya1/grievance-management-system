@@ -24,14 +24,14 @@ export class AllUsersComponent implements OnInit {
 
   buildForm() {
     this.userForm = this.formBuilder.group({
-      roles: [undefined]
+      userRole: this.formBuilder.array([])
     });
   }
 
   getUsers() {
     this.apiService.getAllUsers().subscribe(res => {
       this.users = res;
-      console.log(res);
+      this.addRole(this.users);
     }, error => {
       console.log(error);
     })
@@ -45,5 +45,34 @@ export class AllUsersComponent implements OnInit {
       console.log(error);
       this.toastr.error({detail: 'Error', summary: 'User Deletion failed', duration: 2000});
     });
+  }
+
+  addRole(user: any) {
+    user.forEach((val: any)=> {
+      (this.userForm.get('userRole') as FormArray).push(this.formBuilder.group({
+        id: [val.id],
+        name: [val.name],
+        email: [val.email],
+        roles: [val.is_admin ? 'Admin' : 'User'],
+        is_approved: [val.is_approved ? 'true' : 'false']
+      }));
+    });
+  }
+
+  updateRole(id: number, i: number) {
+    const roleData =
+      {
+        action: this.userForm.get(['userRole', i, 'roles'])?.value === 'Admin' ? 'promote' : 'demote'
+      }
+    this.apiService.promoteDemoteUser(id, roleData).subscribe(res => {
+      this.userForm.get('userRole')?.reset();
+      this.getUsers();
+      this.toastr.success({detail: 'Success', summary: 'User role updated Successfully', duration: 2000});
+    }, error => {
+      this.userForm.get('userRole')?.reset();
+      this.getUsers();
+      this.toastr.error({detail: 'Error', summary: 'Failed to update user role', duration: 2000});
+      console.log(error);
+    })
   }
 }

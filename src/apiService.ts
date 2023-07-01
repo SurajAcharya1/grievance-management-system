@@ -57,7 +57,7 @@ export class ApiService {
   }
 
   promoteDemoteUser(id: number, promoteDemoteData: any) {
-    return this.httpClient.post(ApiService.baseApi + 'user/' + id + '/promote-demote', promoteDemoteData,  {withCredentials: true})
+    return this.httpClient.post(ApiService.baseApi + 'user/' + id + '/promote-demote/', promoteDemoteData, {withCredentials: true})
   }
 
   deleteUser(userId: any) {
