@@ -34,7 +34,9 @@
                   <option value="User" [selected]="users.roles === 'User'">User</option>
                 </select>
                 <!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
-                <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
+                <div ngbTooltip="Delete">
+                  <button class="btn btn-danger fa fa-solid fa-trash" (click)="deleteUser(users.id)"></button>
+                </div>
               </td>
             </ng-container>
           </ng-container>

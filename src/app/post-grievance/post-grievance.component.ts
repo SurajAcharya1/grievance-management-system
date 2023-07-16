@@ -24,6 +24,7 @@ export class PostGrievanceComponent implements OnInit {
 
   buildForm() {
     this.postGrievance = this.formBuilder.group({
+      stayAnonymous: [undefined],
       title: [undefined, Validators.required],
       description: [undefined, Validators.required]
     });
@@ -38,7 +39,8 @@ export class PostGrievanceComponent implements OnInit {
       {
         title: this.postGrievance.get('title')?.value,
         content: this.postGrievance.get('description')?.value,
-        author: LocalStorageUtil.getStorage().id
+        author: LocalStorageUtil.getStorage().id,
+        stay_anonymous: this.postGrievance.get('stayAnonymous')?.value
       }
       console.log(article);
       this.apiService.postArticle(article).subscribe(res => {

@@ -16,6 +16,10 @@ export class ApiService {
     return this.httpClient.get(ApiService.baseApi + 'articles');
   }
 
+  getAllArticles() {
+    return this.httpClient.get(ApiService.baseApi + 'articles/all');
+  }
+
   login(userCredentials: any) {
     return this.httpClient.post(ApiService.baseApi + 'login', userCredentials, {withCredentials: true});
   }

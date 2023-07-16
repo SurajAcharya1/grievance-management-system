@@ -1,0 +1,70 @@
+<div>
+  <app-top-bar></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="mt-5 ms-5">
+      <ng-container *ngIf="myArticles.length>0; else el">
+        <div *ngFor="let articles of myArticles; let i = index">
+          <div class="card card-body shadow mt-3 row col-10">
+            <div class="row col-md-12">
+              <div>
+                <div class="row">
+                  <div class="col-md-10">
+                    <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{articles?.title}}</b></h4>
+                  </div>
+                  <div class="col-md-2 d-flex justify-content-end" style="margin-top: -0.5rem;">
+                    <div>
+                      <strong>Votes</strong><br>
+                      <span class="fa-solid fa-circle-check fa-xl me-1"></span>
+                      <span style="font-size: 20px"><strong>{{articles?.vote}}</strong></span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end" *ngIf="articles?.content.length > 115">
+                    <button style="border: none; border-radius: 50%" class="btn-sm" ngbTooltip="Expand / Collapse">
+                      <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i)"></span>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="!isNotCollapsed[i] && articles?.content.length > 115">
+                  <div class="row">
+                    <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{articles?.content.substring(0, 115)}}
+                      <strong> ...</strong>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <ng-container>
+                  <div [ngbCollapse]="!isNotCollapsed[i] && articles?.content.length > 115">
+                    <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{articles?.content}}</p>
+                  </div>
+                </ng-container>
+              </div>
+              <hr class="mt-2">
+              <div>
+                <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{articles?.created_at | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #el>
+        <div class="d-flex justify-content-center" style="margin-top: 10rem">
+          <div>
+            <h1>You have not posted any thing yet.</h1><br>
+            <h3 class="d-flex justify-content-center">
+              <span [routerLink]="['/post-grievance']" style="color: #3d5af1; cursor: pointer">Click here</span>
+              &nbsp;
+              <span>to start posting.</span>
+            </h3>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

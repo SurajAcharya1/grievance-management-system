@@ -23,13 +23,21 @@
             <button type="button" class="btn btn-primary btn-floating mx-1">
               <i class="fab fa-linkedin-in"></i>
             </button>
-          </div>-->
+          </div>
 
-          <!--<div class="divider d-flex align-items-center my-4">
+          <div class="divider d-flex align-items-center my-4">
             <p class="text-center fw-bold mx-3 mb-0">Or</p>
           </div>-->
 
-          <div class="form-outline mb-4 mt-3">
+          <div class="d-flex justify-content-end mt-3">
+            <label for="anonymous" class="me-2"><strong>Stay Anonymous to Admin: </strong></label>
+            <label class="switch">
+              <input type="checkbox" id="anonymous" formControlName="stayAnonymous">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="form-outline mb-4">
             <label class="form-label mb-1"><strong>Title</strong></label>
             <input type="text" class="form-control form-control-lg"
                    [ngClass]="{'is-invalid' : isSubmitted && postGrievance.controls['title'].errors}"
@@ -59,7 +67,7 @@
 
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-primary btn-lg"
-                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Post</button>
+                    style="padding-left: 2.5rem; padding-right: 2.5rem; background: #3d5af1">Post</button>
           </div>
 
         </form>

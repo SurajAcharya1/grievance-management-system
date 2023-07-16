@@ -12,4 +12,12 @@ export class AuthService {
     return !!LocalStorageUtil.getStorage().token;
   }
 
+  isAdmin() {
+    return LocalStorageUtil.getStorage().is_admin;
+  }
+
+  isUser() {
+    return !LocalStorageUtil.getStorage().is_admin;
+  }
+
 }

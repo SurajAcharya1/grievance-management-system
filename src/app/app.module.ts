@@ -23,6 +23,9 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AllUsersComponent } from './all-users/all-users.component';
 import { ApprovalRequestComponent } from './approval-request/approval-request.component';
 import { AccountComponent } from './account/account.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import { MyGrievanceComponent } from './my-grievance/my-grievance.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { AccountComponent } from './account/account.component';
     AllUsersComponent,
     ApprovalRequestComponent,
     AccountComponent,
+    MyGrievanceComponent,
+    ErrorComponent,
   ],
     imports: [
         BrowserModule,
@@ -53,13 +58,14 @@ import { AccountComponent } from './account/account.component';
           positionClass: 'toast-top-left',
           timeOut: 15000,
           closeButton: true,
-          // progressBar: true,
+          progressBar: true,
         }),
         NgbModule,
         NgbTooltipModule,
         NgxSpinnerModule.forRoot({
           type: 'ball-scale-multiple',
-        })
+        }),
+        NgxPaginationModule
     ],
   providers: [],
   bootstrap: [AppComponent]

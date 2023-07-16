@@ -1,18 +1,33 @@
 <div class="top-bar navbar navbar-dark sticky-top shadow-sm">
   <div class="col-md-3">
-    <span style="margin-left: 10rem">
-      <img src="../assets/waveline.png">
-    </span>
+    <div class="row">
+      <div class="col-md-3 d-flex align-content-center justify-content-end">
+        <span style="margin-top: 0.5rem">
+          <img src="../assets/waveline.png">
+<!--          <i class="fa-solid fa-bolt fa-2xl" style="color: #3d5af1"></i>-->
+        </span>
+      </div>
+      <div class="col-md-6 d-flex align-content-center">
+        <div style="margin-top: 0.4rem; margin-left: -1rem">
+          <span>
+          <h4><strong>गुना<strong style="color: #3d5af1">सो</strong></strong></h4>
+<!--          <h4><strong>Guna<strong style="color: #3d5af1">सो</strong></strong></h4>-->
+<!--          <h4><strong>Guna<strong style="color: #3d5af1">so</strong></strong></h4>-->
+          </span>
+          <p style="margin-top: -0.5rem; font-size: 14px">Your Voice Matters !</p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-md-6 d-flex justify-content-center">
     <input class="w-50 form-control"
-           style="background: #f3f3f3; border: none; font-family: 'Font Awesome 5 Free'"
+           style="background: #f3f3f3; margin-top: -1rem; border: none; font-family: 'Font Awesome 5 Free'"
            type="text"
            placeholder="Search for Complaints"
            aria-label="Search">
   </div>
   <div class="col-md-3 text-start">
-      <div class="row" style="margin-left: 8rem" [routerLink]="['/account']">
+      <div class="row" style="margin-left: 8rem; margin-top: -1rem" [routerLink]="['/account']">
         <div class="col-md-4 text-end"><button class="border-0" style="border-radius: 100%; width: 50px; height: 50px; font-size: xx-large; background: #787d83; color: #202226"><strong>{{currentUser.charAt(0) | titlecase}}</strong></button></div>
         <div class="col-md-8" style="margin-left: -10px; cursor: pointer">
           <span style="color: #211414">

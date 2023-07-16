@@ -6,7 +6,7 @@
     <app-side-bar></app-side-bar>
   </div>
   <div class="col-md-10 scrollable-section" style="font-family: 'Poppins', sans-serif">
-    <div class="row col-md-12 mt-5 mb-5">
+    <div class="row col-md-12 mt-5 mb-4">
       <div class="col-md-4" [routerLink]="['/dashboard']">
         <div class="card card-body round me-5 ms-4 shadow" style="border: none">
           <div class="row">
@@ -14,7 +14,7 @@
               <i class="fa fa-solid fa-layer-group fa-2xl"></i>
             </div>
             <div class="col-md-10">
-              <div><h1><strong>69</strong></h1></div>
+              <div><h1><strong>{{articlesCount}}</strong></h1></div>
               <div><h6><strong>Total Grievance</strong></h6></div>
             </div>
           </div>
@@ -27,7 +27,7 @@
               <i class="fa fa-solid fa-users fa-2xl"></i>
             </div>
             <div class="col-md-10">
-              <div><h1><strong>69</strong></h1></div>
+              <div><h1><strong>{{totalUsersCount}}</strong></h1></div>
               <div><h6><strong>Total Users</strong></h6></div>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <i class="fa fa-solid fa-user-plus fa-2xl"></i>
             </div>
             <div class="col-md-10">
-              <div><h1><strong>69</strong></h1></div>
+              <div><h1><strong>{{pendingUsersCount}}</strong></h1></div>
               <div><h6><strong>New Request</strong></h6></div>
             </div>
           </div>
@@ -49,23 +49,23 @@
     </div>
 
     <div class="pe-4">
-      <div class="card card-body shadow-lg ms-4 me-5" style="border: none">
-        <h3><strong>All Grievances</strong></h3>
+      <div class="card card-body shadow ms-4 me-5" style="border: none">
+        <h5><strong>All Grievances</strong></h5>
         <table class="table table-borderless table-hover">
           <thead class="border-bottom">
-          <tr>
-            <th>S.N.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Created Date</th>
-            <th>Vote</th>
-            <th>Status</th>
-          </tr>
+            <tr>
+              <th>S.N.</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Created Date</th>
+              <th>Vote</th>
+              <th>Status</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let article of articles; let i = index">
+          <tr *ngFor="let article of articles | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
             <ng-container>
-              <td>{{i + 1}}</td>
+              <td>{{((p - 1) * 10) + (i + 1)}}</td>
               <td>{{article.title}}</td>
               <td>{{article.author_name}}</td>
               <td>{{article.created_at | date:'MMM dd, yyyy | hh:mm:ss a'}}</td>
@@ -75,6 +75,9 @@
           </tr>
           </tbody>
         </table>
+        <div class="d-flex justify-content-end me-5">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../apiService";
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {NgToastService} from "ng-angular-popup";
+import {NgxSpinnerService} from "ngx-spinner";
 
 export enum Vote {
   upvote = 'upvote',
@@ -19,8 +20,6 @@ export class BodyComponent implements OnInit {
   articles: any;
   hasUpVoted: Array<boolean> = new Array<boolean>;
   hasDownVoted: Array<boolean> = new Array<boolean>;
-  canUpvote: Array<boolean> = new Array<boolean>;
-  votes: Array<number> = new Array<number>;
   isAdmin: boolean = false;
   relatedArticles: any;
   loggedInUserId = LocalStorageUtil.getStorage().id;
@@ -28,9 +27,11 @@ export class BodyComponent implements OnInit {
 
   relatedArticleId: any;
   relatedArticleTitle!: string;
+  isNotCollapsed: Array<boolean> = Array<boolean>();
 
   constructor(private apiService: ApiService,
-              private toastService: NgToastService) { }
+              private toastService: NgToastService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getArticles();
@@ -65,52 +66,45 @@ export class BodyComponent implements OnInit {
       })
   }
 
-  upVote(id: number, hasUpVoted: any) {
-    if (hasUpVoted) {
-      this.downVote(id, false);
-    } else {
-      this.apiService.updateVote(id, { vote_type: Vote.upvote }).subscribe(res => {
-        this.hasUpVoted = new Array<boolean>;
-        this.hasDownVoted = new Array<boolean>;
-        this.getArticles();
-        this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
-        this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
-      }, error => {
-        console.log(error);
-        this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
-      });
-    }
+  upVote(id: number, event: Event) {
+    event.stopPropagation();
+    this.apiService.updateVote(id, { vote_type: Vote.upvote }).subscribe(res => {
+      this.hasUpVoted = new Array<boolean>;
+      this.hasDownVoted = new Array<boolean>;
+      this.getArticles();
+      // this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
+      // this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
+    }, error => {
+      console.log(error);
+      this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
+    });
   }
 
-  downVote(id: number, hasDownVoted: any) {
-    if (hasDownVoted) {
-      this.upVote(id, false);
-    } else {
-      this.apiService.updateVote(id, {vote_type: Vote.downvote}).subscribe( res => {
-        this.hasUpVoted = new Array<boolean>;
-        this.hasDownVoted = new Array<boolean>;
-        this.getArticles();
-        this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
-        this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
-      }, error => {
-        console.log(error);
-        this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
-      });
-    }
-  }
-
-  setVotes(v: number, i:number) {
-    this.votes[i] = v;
+  downVote(id: number, event: Event) {
+    event.stopPropagation();
+    this.apiService.updateVote(id, {vote_type: Vote.downvote}).subscribe( res => {
+      this.hasUpVoted = new Array<boolean>;
+      this.hasDownVoted = new Array<boolean>;
+      this.getArticles();
+      // this.getRelatedArticles(this.relatedArticleId, this.relatedArticleTitle);
+      // this.toastService.success({detail: 'Success', summary: 'voted', duration: 2000});
+    }, error => {
+      console.log(error);
+      this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
+    });
   }
 
   getRelatedArticles(id: number, title: string) {
+    this.spinner.show();
     this.apiService.getRelatedArticles(id).subscribe(res => {
+      this.spinner.hide();
       this.relatedArticles = res;
       this.hasPressed = true;
       this.relatedArticles.push(title);
       this.relatedArticleId = id;
       this.relatedArticleTitle = title;
     }, error => {
+      this.spinner.hide();
       console.log(error);
     });
   }
@@ -118,6 +112,17 @@ export class BodyComponent implements OnInit {
   close() {
     this.hasPressed = false;
     this.relatedArticleId = null;
+  }
+
+
+
+  collapse(i: number, event: Event) {
+    event.stopPropagation();
+    if (!this.isNotCollapsed[i]) {
+      this.isNotCollapsed[i] = true;
+    } else {
+      this.isNotCollapsed[i] = false;
+    }
   }
 
 }
