@@ -12,6 +12,7 @@ export class AllUsersComponent implements OnInit {
 
   users: any;
   userForm: FormGroup = new FormGroup<any>({});
+  p: number = 1;
 
   constructor(private apiService: ApiService,
               private formBuilder: FormBuilder,
@@ -65,13 +66,14 @@ export class AllUsersComponent implements OnInit {
         action: this.userForm.get(['userRole', i, 'roles'])?.value === 'Admin' ? 'promote' : 'demote'
       }
     this.apiService.promoteDemoteUser(id, roleData).subscribe(res => {
-      this.userForm.get('userRole')?.reset();
-      this.getUsers();
       this.toastr.success({detail: 'Success', summary: 'User role updated Successfully', duration: 2000});
-    }, error => {
-      this.userForm.get('userRole')?.reset();
+      // this.userForm.get('userRole')?.reset();
+      this.users.patchValue(null);
       this.getUsers();
+    }, error => {
       this.toastr.error({detail: 'Error', summary: 'Failed to update user role', duration: 2000});
+      this.users.patchValue(null);
+      this.getUsers();
       console.log(error);
     })
   }

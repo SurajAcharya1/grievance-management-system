@@ -10,6 +10,7 @@ import {NgToastService} from "ng-angular-popup";
 export class ApprovalRequestComponent implements OnInit {
 
   approvalPendingUsers: any
+  p: number = 1;
 
   constructor(private apiService: ApiService,
               private toastr: NgToastService) { }

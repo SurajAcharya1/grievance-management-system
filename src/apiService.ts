@@ -76,4 +76,8 @@ export class ApiService {
     return this.httpClient.post(ApiService.baseApi + 'approve-user/', userId, {withCredentials: true})
   }
 
+  completeArticle(id: number, data: any) {
+    return this.httpClient.patch(ApiService.baseApi + 'articles/' + id + '/status/', data,  {withCredentials: true})
+  }
+
 }

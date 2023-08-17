@@ -16,7 +16,7 @@ import {NgToastModule} from "ng-angular-popup";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { PostGrievanceComponent } from './post-grievance/post-grievance.component';
-import {NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModalModule, NgbModule, NgbTooltip, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgxSpinnerModule} from "ngx-spinner";
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -65,7 +65,8 @@ import { ErrorComponent } from './error/error.component';
         NgxSpinnerModule.forRoot({
           type: 'ball-scale-multiple',
         }),
-        NgxPaginationModule
+        NgxPaginationModule,
+        NgbModalModule
     ],
   providers: [],
   bootstrap: [AppComponent]

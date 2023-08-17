@@ -56,3 +56,40 @@
   position: absolute;
   right: 0;
 }
+
+.col-md-zeroPointFive{
+  flex:0 0 auto;
+  width:3%
+}
+
+.col-md-elevenPointFive{
+  flex:0 0 auto;
+  width:97%
+}
+
+.approve-button {
+  background: none;
+  border: 1px solid #2db012;
+  color: #2db012;
+  border-radius: 100px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}
+
+.approve-button:hover {
+  background: #2db012;
+  color: #ffffff;
+  border-radius: 100px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3d5af1;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges,} from '@angular/core';
 import {ApiService} from "../../apiService";
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {NgToastService} from "ng-angular-popup";
@@ -17,7 +17,11 @@ export enum Vote {
 
 export class BodyComponent implements OnInit {
 
+  @Input() searchKeyWord: any;
+  @Input() event!: Event;
+
   articles: any;
+  filteredArticles: any;
   hasUpVoted: Array<boolean> = new Array<boolean>;
   hasDownVoted: Array<boolean> = new Array<boolean>;
   isAdmin: boolean = false;
@@ -28,6 +32,8 @@ export class BodyComponent implements OnInit {
   relatedArticleId: any;
   relatedArticleTitle!: string;
   isNotCollapsed: Array<boolean> = Array<boolean>();
+  isNotCollapsedSimilar: Array<boolean> = Array<boolean>();
+  isSearched: boolean = false;
 
   constructor(private apiService: ApiService,
               private toastService: NgToastService,
@@ -36,6 +42,12 @@ export class BodyComponent implements OnInit {
   ngOnInit(): void {
     this.getArticles();
     this.isAdmin =  LocalStorageUtil.getStorage().is_admin ? true : false;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.searchKeyWord.currentValue !== changes.searchKeyWord.previousValue) {
+      this.search();
+    }
   }
 
   getArticles() {
@@ -114,8 +126,6 @@ export class BodyComponent implements OnInit {
     this.relatedArticleId = null;
   }
 
-
-
   collapse(i: number, event: Event) {
     event.stopPropagation();
     if (!this.isNotCollapsed[i]) {
@@ -123,6 +133,40 @@ export class BodyComponent implements OnInit {
     } else {
       this.isNotCollapsed[i] = false;
     }
+  }
+
+  similarCollapse(ii: number, event: Event) {
+    event.stopPropagation();
+    if (!this.isNotCollapsedSimilar[ii]) {
+      this.isNotCollapsedSimilar[ii] = true;
+    } else {
+      this.isNotCollapsedSimilar[ii] = false;
+    }
+  }
+
+  completeArticle = (id: number, event: Event) => {
+    event.stopPropagation();
+    const data =
+      {
+        is_completed: true
+      }
+      this.apiService.completeArticle(id, data).subscribe(res => {
+        this.articles = null;
+        this.getArticles();
+        this.toastService.success({detail: 'Success', summary: 'Successfully changed the article status', duration: 2000});
+      }, error => {
+        console.log(error);
+        this.toastService.error({detail: 'Error', summary: 'Error changing article status.', duration: 2000});
+      })
+  }
+
+  search() {
+    this.isSearched = true;
+    this.filteredArticles = this.articles.filter((value: any) => value.title.toUpperCase().includes(this.searchKeyWord.toUpperCase()));
+  }
+
+  seeAll() {
+    this.isSearched = false;
   }
 
 }

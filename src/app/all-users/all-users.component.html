@@ -1,5 +1,5 @@
 <div>
-  <app-top-bar></app-top-bar>
+  <app-top-bar [hasArticle]="false"></app-top-bar>
 </div>
 <div class="row" style="background: #fcfcfc">
   <div class="col-md-2">
@@ -20,22 +20,21 @@
         </tr>
         </thead>
         <tbody [formGroup]="userForm">
-        <tr *ngFor="let users of userForm.get('userRole')?.value; let i = index" formArrayName="userRole">
+        <tr *ngFor="let users of userForm.get('userRole')?.value | paginate: {itemsPerPage: 10, currentPage: p} ; let i = index" formArrayName="userRole">
           <ng-container [formGroupName]="i">
             <ng-container *ngIf="users.is_approved">
-                          <td>{{i + 1}}</td>
+                          <td>{{((p - 1) * 10) + (i + 1)}}</td>
                           <td>{{users.name}}</td>
                           <td>{{users.email}}</td>
-                          <td>{{users.roles}}</td>
+                          <td [ngStyle]="{'color': users.roles === 'Admin' ? '#3d5af1' : ''}">{{users.roles}}</td>
               <td class="d-flex justify-content-center">
                 <select class="form-select-sm me-3" formControlName="roles" (change)="updateRole(users.id, i)">
                   <option value="null" hidden>select Role</option>
                   <option value="Admin" [selected]="users.roles === 'Admin'">Admin</option>
                   <option value="User" [selected]="users.roles === 'User'">User</option>
                 </select>
-                <!--              <button class="btn btn-primary me-3" style="background: #455be1">Admin</button>-->
-                <div ngbTooltip="Delete">
-                  <button class="btn btn-danger fa fa-solid fa-trash" (click)="deleteUser(users.id)"></button>
+                <div>
+                  <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
                 </div>
               </td>
             </ng-container>
@@ -43,6 +42,19 @@
         </tr>
         </tbody>
       </table>
+      <div class="row">
+        <!--<div class="col-md-6">
+          Showing {{((p - 1) * 10) + (1)}} to {{((p - 1) * 10) + (articles.length % 10 === 0 ? 10 : articles.length - ((p - 1) * 10))}} of {{articles.length}} records
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end me-5">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>-->
+        <div class="d-flex justify-content-end me-5">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
     </div>
   </div>
 </div>
