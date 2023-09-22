@@ -80,4 +80,8 @@ export class ApiService {
     return this.httpClient.patch(ApiService.baseApi + 'articles/' + id + '/status/', data,  {withCredentials: true})
   }
 
+  deleteArticle(id: number) {
+    return this.httpClient.delete(ApiService.baseApi + 'articles/' + id + '/delete', {withCredentials: true});
+  }
+
 }

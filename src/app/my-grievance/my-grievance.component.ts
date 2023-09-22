@@ -20,6 +20,10 @@ export class MyGrievanceComponent implements OnInit {
   editArticleTitle: any;
   editArticleContent: any;
   editArticleAnonymity: any;
+  articleId: any;
+  isCompleted: any;
+  searchKeyword = '';
+  filteredArticle: any;
 
   editGrievance: FormGroup = new FormGroup<any>({});
 
@@ -35,11 +39,13 @@ export class MyGrievanceComponent implements OnInit {
 
   getMyArticles() {
     this.apiService.getAllArticles().subscribe((res: any) => {
-      this.allArticles = res;
+      res.forEach((val: any) => {
+        this.allArticles.push(val);
+      });
       this.allArticles.filter(value => {value.author === this.userId ? this.myArticles.push(value) : ''})
       console.log(this.userId);
       console.log(res);
-      console.log(this.myArticles);
+      console.log('my articles::::', this.myArticles);
     }, error => {
       console.log(error);
       this.toastr.success({summary: 'Error', detail: 'Error getting My Grievances', duration: 2000})
@@ -55,10 +61,12 @@ export class MyGrievanceComponent implements OnInit {
     }
   }
 
-  openModel(model: any, title: any, content: any, anonymity: any) {
+  openModel(model: any, title: any, content: any, id: any, anonymity: any, completed: any) {
     this.editArticleTitle = title;
     this.editArticleContent = content;
     this.editArticleAnonymity = anonymity;
+    this.articleId = id;
+    this.isCompleted = completed;
     this.buildForm();
     this.model.open(model, {
       size: "lg",
@@ -79,12 +87,31 @@ export class MyGrievanceComponent implements OnInit {
   }
 
   submit() {
-    this.toastr.success({detail: 'Success', summary:'Grievance Edited Successfully.', duration: 2000});
-    this.closeModel();
+    if (!this.isCompleted) {
+      this.toastr.success({detail: 'Success', summary:'Grievance Edited Successfully.', duration: 2000});
+      this.closeModel();
+    }
   }
 
-  delete() {
+  delete(id: number) {
+    this.apiService.deleteArticle(id).subscribe(res => {
+      this.toastr.success({detail: 'Success', summary: 'Articles deleted successfully', duration: 2000});
+      this.closeModel();
+      this.myArticles = [];
+      this.getMyArticles();
+    }, error => {
+      console.log(error);
+      this.toastr.error({detail: 'Error', summary: 'Failed to delete article', duration: 2000})
+    })
+  }
 
+  getSearchKeyWord(searchKeyword: any) {
+    this.searchKeyword = searchKeyword;
+    this.filteredArticle = this.myArticles.filter(value => value.title.toUpperCase().includes(searchKeyword.toUpperCase()));
+  }
+
+  seeAll() {
+    this.searchKeyword = '';
   }
 
 }

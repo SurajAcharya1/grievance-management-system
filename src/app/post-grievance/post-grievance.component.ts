@@ -24,7 +24,7 @@ export class PostGrievanceComponent implements OnInit {
 
   buildForm() {
     this.postGrievance = this.formBuilder.group({
-      stayAnonymous: [undefined],
+      stayAnonymous: [false],
       title: [undefined, Validators.required],
       description: [undefined, Validators.required]
     });

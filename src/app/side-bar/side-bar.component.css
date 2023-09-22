@@ -39,6 +39,7 @@ body {
   color: #3d5af1;
   background-color: #e6edfb;
   border-left: 10px solid #3d5af1;
+  cursor: a;
 }
 
 .sidebar-nav div.active {
