@@ -42,9 +42,7 @@ export class PostGrievanceComponent implements OnInit {
         author: LocalStorageUtil.getStorage().id,
         stay_anonymous: this.postGrievance.get('stayAnonymous')?.value
       }
-      console.log(article);
       this.apiService.postArticle(article).subscribe(res => {
-        console.log(res);
         this.toastr.success({detail: 'Success', summary: 'Posted Grievance Successfully.', duration: 2000});
         this.postGrievance.get('title')?.patchValue(null);
         this.postGrievance.get('description')?.patchValue(null);

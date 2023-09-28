@@ -101,6 +101,5 @@ export class HomePageComponent {
 
   onToggle() {
     this.toggled ? this.toggled = false : this.toggled = true;
-    console.log('toggled::::', this.toggled);
   }
 }

@@ -26,7 +26,6 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.sentVerificationCode);
   }
 
   buildForm() {

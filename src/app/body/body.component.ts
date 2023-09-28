@@ -53,8 +53,6 @@ export class BodyComponent implements OnInit {
   getArticles() {
     this.apiService.getArticles().subscribe(res => {
       this.articles = res;
-      console.log('res:::', res);
-      console.log(this.articles);
       // @ts-ignore
       this.articles.forEach(v => {
         if (v.upvoted_by.includes(LocalStorageUtil.getStorage().id)) {
@@ -63,7 +61,6 @@ export class BodyComponent implements OnInit {
           this.hasUpVoted.push(false);
         }
       });
-      console.log('hasUpVoted:::', this.hasUpVoted);
       // @ts-ignore
       this.articles.forEach(v => {
         if (v.downvoted_by.includes(LocalStorageUtil.getStorage().id)) {
@@ -72,7 +69,6 @@ export class BodyComponent implements OnInit {
           this.hasDownVoted.push(false);
         }
       });
-      console.log('hasDownVoted:::', this.hasDownVoted);
     }, (error) => {
       console.log(error);
       this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
