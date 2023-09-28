@@ -208,3 +208,15 @@ input {
     height: 100%;
   }
 }
+
+.password-input {
+  position: relative;
+  width: 100%
+}
+
+.password-icon {
+  position: relative;
+  margin-top: -2rem;
+  margin-left: 90%;
+  opacity: 70%;
+}

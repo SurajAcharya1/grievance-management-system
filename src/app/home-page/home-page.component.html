@@ -46,10 +46,22 @@
           <!-- Password input -->
           <div class="form-outline mb-3">
             <label class="form-label mb-1" for="form3Example4">Password</label>
-            <input type="password" id="form3Example4" class="form-control form-control-lg"
-                   [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['password'].errors}"
-                   formControlName="password"
-                   placeholder="Enter password"/>
+            <div class="row">
+              <div class="password-input">
+                <input [type]="toggled ? 'text' : 'password'" id="form3Example4" class="form-control form-control-lg"
+                       [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['password'].errors}"
+                       formControlName="password"
+                       placeholder="Enter password"/>
+              </div>
+              <div class="password-icon d-flex justify-content-start">
+                <ng-container *ngIf="!toggled; else el">
+                  <i class="fa fa-solid fa-eye" (click)="onToggle()"></i>
+                </ng-container>
+                <ng-template #el>
+                  <i class="fa fa-solid fa-eye-slash" (click)="onToggle()"></i>
+                </ng-template>
+              </div>
+            </div>
             <div *ngIf="isSubmitted && loginForm.controls['password'].errors" class="text-danger">
               <div *ngIf="isSubmitted && loginForm.controls['password'].errors['required']">
                 Password is required
@@ -72,7 +84,7 @@
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="submit" class="btn btn-primary btn-lg"
+            <button type="submit" class="btn btn-primary btn-lg w-100"
                     style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a [routerLink]="['/sign-up']"
                                                                               class="link-danger">Sign Up</a></p>

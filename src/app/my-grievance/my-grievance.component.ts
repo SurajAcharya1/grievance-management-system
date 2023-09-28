@@ -4,6 +4,7 @@ import {NgToastService} from "ng-angular-popup";
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-my-grievance',
@@ -31,7 +32,8 @@ export class MyGrievanceComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private apiService: ApiService,
               private toastr: NgToastService,
-              private model: NgbModal) { }
+              private model: NgbModal,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getMyArticles();
@@ -44,7 +46,6 @@ export class MyGrievanceComponent implements OnInit {
       });
       this.allArticles.filter(value => {value.author === this.userId ? this.myArticles.push(value) : ''})
       console.log(this.userId);
-      console.log(res);
       console.log('my articles::::', this.myArticles);
     }, error => {
       console.log(error);
@@ -87,22 +88,46 @@ export class MyGrievanceComponent implements OnInit {
   }
 
   submit() {
+    this.spinner.show();
     if (!this.isCompleted) {
-      this.toastr.success({detail: 'Success', summary:'Grievance Edited Successfully.', duration: 2000});
-      this.closeModel();
+      const data = {
+        title: this.editGrievance?.get('title')?.value,
+        content: this.editGrievance?.get('description')?.value,
+        stay_anonymous: this.editGrievance?.get('stayAnonymous')?.value
+      }
+      this.apiService.updateArticle(this.articleId, data).subscribe({
+        next: (res: any) => {
+          console.log('res:::', res.detail);
+          this.toastr.success({detail: 'Success', summary:'Grievance Edited Successfully.', duration: 2000});
+          this.spinner.hide();
+          this.closeModel();
+          this.allArticles = [];
+          this.myArticles = [];
+          this.getMyArticles();
+        },
+        error: (error: any) => {
+          console.log('error:::',error);
+          this.spinner.hide();
+          this.toastr.error({detail: 'Error', summary:'Error Updating Grievance.', duration: 2000});
+          this.closeModel();
+        }
+      })
     }
   }
 
   delete(id: number) {
-    this.apiService.deleteArticle(id).subscribe(res => {
-      this.toastr.success({detail: 'Success', summary: 'Articles deleted successfully', duration: 2000});
-      this.closeModel();
-      this.myArticles = [];
-      this.getMyArticles();
-    }, error => {
-      console.log(error);
-      this.toastr.error({detail: 'Error', summary: 'Failed to delete article', duration: 2000})
-    })
+    this.apiService.deleteArticle(id).subscribe({
+        next: (res: any) => {
+        this.toastr.success({detail: 'Success', summary: 'Articles deleted successfully', duration: 2000});
+        this.closeModel();
+        this.allArticles = [];
+        this.myArticles = [];
+        this.getMyArticles();
+        }, error: (error: any) => {
+        console.log(error);
+        this.toastr.error({detail: 'Error', summary: 'Failed to delete article', duration: 2000})
+    }
+    });
   }
 
   getSearchKeyWord(searchKeyword: any) {

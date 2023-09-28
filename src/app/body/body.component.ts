@@ -53,6 +53,7 @@ export class BodyComponent implements OnInit {
   getArticles() {
     this.apiService.getArticles().subscribe(res => {
       this.articles = res;
+      console.log('res:::', res);
       console.log(this.articles);
       // @ts-ignore
       this.articles.forEach(v => {

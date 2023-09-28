@@ -20,6 +20,7 @@ export class HomePageComponent {
   isSubmitted: boolean = false;
   rememberMe: boolean = false;
   rememberedEmail: any;
+  toggled: boolean = false;
 
   constructor(
     private client: HttpClient,
@@ -96,5 +97,10 @@ export class HomePageComponent {
     }, error => {
       console.log(error);
     });
+  }
+
+  onToggle() {
+    this.toggled ? this.toggled = false : this.toggled = true;
+    console.log('toggled::::', this.toggled);
   }
 }
