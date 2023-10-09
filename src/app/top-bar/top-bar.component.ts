@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {LocalStorageUtil} from "../../localStorageUtil";
-import {NgToastService} from "ng-angular-popup";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -19,8 +18,7 @@ export class TopBarComponent implements OnInit {
   searchForm: FormGroup = new FormGroup<any>({});
 
   constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private toastService: NgToastService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.buildForm();
