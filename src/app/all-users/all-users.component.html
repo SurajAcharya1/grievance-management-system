@@ -28,13 +28,13 @@
                           <td>{{users.email}}</td>
                           <td [ngStyle]="{'color': users.roles === 'Admin' ? '#3d5af1' : ''}">{{users.roles}}</td>
               <td class="d-flex justify-content-center">
-                <select class="form-select-sm me-3" formControlName="roles" (change)="updateRole(users.id, i)">
+                <select class="form-select-sm me-3" formControlName="roles" (change)="openModel(updateConfirmation,users.id, i)">
                   <option value="null" hidden>select Role</option>
                   <option value="Admin" [selected]="users.roles === 'Admin'">Admin</option>
                   <option value="User" [selected]="users.roles === 'User'">User</option>
                 </select>
                 <div>
-                  <button class="btn btn-danger fa fa-solid fa-trash" ngbTooltip="Delete" (click)="deleteUser(users.id)"></button>
+                  <button class="btn btn-danger fa fa-solid fa-trash" (click)="deleteUser(users.id)"></button>
                 </div>
               </td>
             </ng-container>
@@ -58,3 +58,22 @@
     </div>
   </div>
 </div>
+<ng-template #updateConfirmation>
+  <div class="modal-content p-2">
+    <div class="row col-md-12">
+      <div class="col-md-11">
+        <h4>Do you want to change this user role?</h4>
+      </div>
+      <div (click)="close()" class="col-md-1 d-flex justify-content-end">
+        <span aria-hidden="true" style="cursor: pointer; color: red">×</span>
+      </div>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-success" (click)="updateRole(userId, index)">Yes</button>
+        <button class="ms-1 btn btn-outline-danger" (click)="close()">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -25,7 +25,7 @@
             <td>{{pendingUsers.name}}</td>
             <td>{{pendingUsers.email}}</td>
             <td class="d-flex justify-content-center">
-              <button class="btn btn-primary me-3" style="background: #455be1" (click)="approveUser(pendingUsers.id)">Approve</button>
+              <button class="btn btn-primary me-3" style="background: #455be1" (click)="openModal(approveConfirmation, pendingUsers.id)">Approve</button>
             </td>
           </ng-container>
         </tr>
@@ -50,3 +50,22 @@
     </div>
   </div>
 </div>
+<ng-template #approveConfirmation>
+  <div class="modal-content p-2">
+    <div class="row col-md-12">
+      <div class="col-md-11">
+        <h4>Do you want to accept this approval request?</h4>
+      </div>
+      <div (click)="close()" class="col-md-1 d-flex justify-content-end">
+        <span aria-hidden="true" style="cursor: pointer; color: red">×</span>
+      </div>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-success" (click)="approveUser(userId)">Yes</button>
+        <button class="ms-1 btn btn-outline-danger" (click)="close()">No</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

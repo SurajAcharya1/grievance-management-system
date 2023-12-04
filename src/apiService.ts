@@ -77,7 +77,7 @@ export class ApiService {
   }
 
   completeArticle(id: number, data: any) {
-    return this.httpClient.patch(ApiService.baseApi + 'articles/' + id + '/status/', data,  {withCredentials: true})
+    return this.httpClient.put(ApiService.baseApi + 'articles/' + id + '/status/', data,  {withCredentials: true})
   }
 
   deleteArticle(id: number) {

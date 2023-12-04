@@ -3,9 +3,10 @@
     <ng-container *ngIf="!isSearched; else el">
       <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let article of articles; let i = index"
            (click)="getRelatedArticles(article?.id, article?.title)" [ngbTooltip]="((article?.author === loggedInUserId) && !isAdmin) ? 'Your Article' : ''">
-        <div class="card card-body shadow card-main pe-5" [ngStyle]="{'background' : article?.id === relatedArticleId ? '#eceefd' : ''}">
+        <div class="card card-body shadow card-main pe-5" [ngStyle]="{'background' : article?.id === relatedArticleId ? '#eceefd' : ''}"
+             [ngStyle]="{'background' :  i%2 === 0 ? '#deefe3' : ''}">
           <div class="row">
-            <div class="col-md-12 row">
+            <div [ngClass]="i%2 === 0 ? 'col-md-11-point-5 row' : 'col-md-12 row'">
               <div class="align-content-center" [ngClass]=" isAdmin ? '' : 'col-md-1'">
                 <div class="ms-3">
                   <div *ngIf="!isAdmin;">
@@ -95,6 +96,9 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="col-md-point-5" *ngIf="i%2 === 0">
+              <span class="ps-2 fa fa-regular fa-star" style="color: #3d5af1" ngbTooltip="{{i}} genuine grievances posted by this user in the past">{{i}}</span>
             </div>
           </div>
         </div>

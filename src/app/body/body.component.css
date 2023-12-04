@@ -93,3 +93,11 @@
 .btn-outline-primary:hover {
   background-color: #3d5af1;
 }
+.col-md-11-point-5{
+  flex:0 0 auto;
+  width:99.5%
+}
+.col-md-point-5{
+  flex:0 0 auto;
+  width:0.5%
+}

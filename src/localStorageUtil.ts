@@ -37,7 +37,8 @@ export class LocalStorage {
   email!: string;
   is_admin!: boolean;
   is_approved!: boolean;
-  token!: any
+  token!: any;
+  exp!: any
 }
 
 export class LocalStorageEmail {

@@ -1,0 +1,32 @@
+<div class="card p-1">
+    <div class="card-header">
+        Warning
+    </div>
+    <div class="card-body">
+        <span>Your Session has been expired!! Please Login again.</span><br>
+        <i class="text-danger">In case of wrong credential, you will be redirected to login page!</i>
+        <form [formGroup]="timeOutForm" (submit)="submit()"
+          class="login-form mt-3"
+              name="login-form">
+            <div class="form-group has-feedback">
+                <input class="form-control"
+                       formControlName="password"
+                       [ngClass]="{'is-invalid' : isSubmitted && timeOutForm.get('password')?.errors}"
+                       placeholder="Password" required
+                       type="password">
+              <div *ngIf="isSubmitted && timeOutForm.get('password')?.errors" class="text-danger">
+                <div *ngIf="isSubmitted && timeOutForm.get('password')?.errors?.required">
+                  Password is required
+                </div>
+                <div *ngIf="isSubmitted && timeOutForm.get('password')?.errors?.minlength">
+                  Password must be at least 8 characters
+                </div>
+            </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary btn-flat mt-3" type="submit">verify</button>
+            </div>
+        </form>
+
+    </div>
+</div>

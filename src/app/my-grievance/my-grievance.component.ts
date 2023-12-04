@@ -112,6 +112,9 @@ export class MyGrievanceComponent implements OnInit {
           this.closeModel();
         }
       })
+    } else {
+      this.spinner.hide();
+      return;
     }
   }
 

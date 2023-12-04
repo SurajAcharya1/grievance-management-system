@@ -63,10 +63,10 @@
               </div>
             </div>
             <div *ngIf="isSubmitted && loginForm.controls['password'].errors" class="text-danger">
-              <div *ngIf="isSubmitted && loginForm.controls['password'].errors['required']">
+              <div *ngIf="isSubmitted && loginForm.controls['password'].errors?.required">
                 Password is required
               </div>
-              <div *ngIf="isSubmitted && loginForm.controls['password'].errors['minlength']">
+              <div *ngIf="isSubmitted && loginForm.controls['password'].errors?.minlength">
                 Password must be at least 8 characters
               </div>
             </div>

@@ -105,10 +105,22 @@
           <!-- Password input -->
           <div class="form-outline mb-3">
             <label class="form-label mb-1" for="form3Example4">Password</label>
-            <input type="password" id="form3Example4" class="form-control form-control-lg"
-                   [ngClass]="{'is-invalid' : isSubmitted && registerForm.controls['password'].errors}"
-                   formControlName="password"
-                   placeholder="Enter password"/>
+            <div class="row">
+              <div class="password-input">
+                <input [type]="toggled ? 'text' : 'password'" id="form3Example4" class="form-control form-control-lg"
+                       [ngClass]="{'is-invalid' : isSubmitted && registerForm.controls['password'].errors}"
+                       formControlName="password"
+                       placeholder="Enter password"/>
+              </div>
+              <div class="password-icon d-flex justify-content-start">
+                <ng-container *ngIf="!toggled; else el">
+                  <i class="fa fa-solid fa-eye" (click)="onToggle()"></i>
+                </ng-container>
+                <ng-template #el>
+                  <i class="fa fa-solid fa-eye-slash" (click)="onToggle()"></i>
+                </ng-template>
+              </div>
+            </div>
             <div *ngIf="isSubmitted && registerForm.controls['password'].errors" class="text-danger">
               <div *ngIf="isSubmitted && registerForm.controls['password'].errors['required']">
                 Password is required
@@ -122,10 +134,23 @@
           <!--Confirm Password input -->
           <div class="form-outline mb-3">
             <label class="form-label mb-1">Confirm Password</label>
-            <input type="password"  class="form-control form-control-lg"
-                   [ngClass]="{'is-invalid' : (isSubmitted && registerForm.controls['confirmPassword'].errors) || (registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value)}"
-                   formControlName="confirmPassword"
-                   placeholder="Enter password"/>
+            <div class="row">
+              <div class="password-input">
+                <input [type]="confirmToggled ? 'text' : 'password'" class="form-control form-control-lg"
+                       [ngClass]="{'is-invalid' : (isSubmitted && registerForm.controls['confirmPassword'].errors) || (registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value)}"
+                       formControlName="confirmPassword"
+                       placeholder="Enter password"/>
+              </div>
+              <div class="password-icon d-flex justify-content-start"
+              [ngStyle]="{'margin-left' : (registerForm.get('confirmPassword')?.value === registerForm.get('password')?.value) ? '90%' : '85%'}">
+                <ng-container *ngIf="!confirmToggled; else elc">
+                  <i class="fa fa-solid fa-eye" (click)="onConfirmToggle()"></i>
+                </ng-container>
+                <ng-template #elc>
+                  <i class="fa fa-solid fa-eye-slash" (click)="onConfirmToggle()"></i>
+                </ng-template>
+              </div>
+            </div>
             <div *ngIf="isSubmitted && registerForm.controls['confirmPassword'].errors" class="text-danger">
               <div *ngIf="isSubmitted && registerForm.controls['confirmPassword'].errors['required']">
                 Password is required

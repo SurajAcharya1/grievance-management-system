@@ -1,0 +1,8 @@
+.col-md-11-point-5{
+  flex:0 0 auto !important;
+  width:95% !important;
+}
+.col-md-0-point-5{
+  flex:0 0 auto !important;;
+  width:5% !important;
+}

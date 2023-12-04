@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../apiService";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {NgToastService} from "ng-angular-popup";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-all-users',
@@ -10,13 +11,16 @@ import {NgToastService} from "ng-angular-popup";
 })
 export class AllUsersComponent implements OnInit {
 
-  users: any;
+  users: Array<any> = new Array<any>();
   userForm: FormGroup = new FormGroup<any>({});
   p: number = 1;
+  userId: any;
+  index: any;
 
   constructor(private apiService: ApiService,
               private formBuilder: FormBuilder,
-              private toastr: NgToastService) { }
+              private toastr: NgToastService,
+              private model: NgbModal) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -30,7 +34,10 @@ export class AllUsersComponent implements OnInit {
   }
 
   getUsers() {
-    this.apiService.getAllUsers().subscribe(res => {
+    this.apiService.getAllUsers().subscribe((res: any) => {
+      res.forEach((val: any) => {
+        this.users.push(val);
+      })
       this.users = res;
       this.addRole(this.users);
     }, error => {
@@ -39,8 +46,12 @@ export class AllUsersComponent implements OnInit {
   }
 
   deleteUser(id: number) {
-    this.apiService.deleteUser(id).subscribe(res => {
+    this.apiService.deleteUser(id).subscribe((res: any) => {
       this.toastr.success({detail: 'Success', summary: 'User Deleted Successfully', duration: 2000});
+      // this.users.patchValue(null);
+      res.forEach((val: any) => {
+        this.users.push(val);
+      })
       this.getUsers();
     }, error => {
       console.log(error);
@@ -60,7 +71,14 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
+  openModel(model: any, userId: any, index: any) {
+    this.userId = userId;
+    this.index = index;
+    this.model.open(model);
+  }
+
   updateRole(id: number, i: number) {
+    this.model.dismissAll();
     const roleData =
       {
         action: this.userForm.get(['userRole', i, 'roles'])?.value === 'Admin' ? 'promote' : 'demote'
@@ -68,13 +86,14 @@ export class AllUsersComponent implements OnInit {
     this.apiService.promoteDemoteUser(id, roleData).subscribe(res => {
       this.toastr.success({detail: 'Success', summary: 'User role updated Successfully', duration: 2000});
       // this.userForm.get('userRole')?.reset();
-      this.users.patchValue(null);
-      this.getUsers();
+      this.ngOnInit();
     }, error => {
       this.toastr.error({detail: 'Error', summary: 'Failed to update user role', duration: 2000});
-      this.users.patchValue(null);
-      this.getUsers();
       console.log(error);
     })
+  }
+
+  close() {
+    this.model.dismissAll();
   }
 }

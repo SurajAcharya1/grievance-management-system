@@ -44,7 +44,7 @@ export class HomePageComponent {
   buildForm() {
     this.loginForm = this.formBuilder.group({
       email: [undefined, [Validators.required, Validators.email]],
-      password: [undefined, [Validators.required, Validators.minLength(8)]],
+      password: [undefined, [Validators.required]],
       rememberMe: [undefined]
     });
   }
@@ -62,7 +62,8 @@ export class HomePageComponent {
         };
       this.apiService.login(userCredentials).subscribe(res => {
         token = res;
-        this.getUser(token.jwt);
+        console.log('res:::', res);
+        this.getUser(token.jwt, token.exp);
         if (this?.loginForm?.get('rememberMe')?.value) {
           const storage = LocalStorageUtil.getEmailStorage();
           storage.rememberMeEmail = this?.loginForm?.get('email')?.value;
@@ -77,9 +78,10 @@ export class HomePageComponent {
     }
   }
 
-  getUser(token: string) {
+  getUser(token: string, exp: any) {
     this.apiService.getLoggedInUserDetails().subscribe(res => {
       this.userDetails = res;
+      console.log('user:::', this.userDetails);
       const storage = LocalStorageUtil.getStorage();
       storage.id = this.userDetails.id;
       storage.name = this.userDetails.name;
@@ -87,6 +89,7 @@ export class HomePageComponent {
       storage.is_admin = this.userDetails.is_admin;
       storage.is_approved = this.userDetails.is_approved;
       storage.token = token;
+      storage.exp = exp;
       LocalStorageUtil.setStorage(storage);
       this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
       if (LocalStorageUtil.getStorage().is_admin) {

@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
 
   isSubmitted: boolean = false;
   registerForm: FormGroup = new FormGroup<any>({});
+  toggled: boolean = false;
+  confirmToggled: boolean = false;
 
   constructor(private httpClient: HttpClient,
               private formBuilder: FormBuilder,
@@ -57,6 +59,14 @@ export class SignUpComponent implements OnInit {
         })
 
     }
+  }
+
+  onToggle() {
+    this.toggled ? this.toggled = false : this.toggled = true;
+  }
+
+  onConfirmToggle() {
+    this.confirmToggled ? this.confirmToggled = false : this.confirmToggled = true;
   }
 
 }
