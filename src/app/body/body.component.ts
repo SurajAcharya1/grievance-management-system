@@ -53,6 +53,7 @@ export class BodyComponent implements OnInit {
   getArticles() {
     this.apiService.getArticles().subscribe(res => {
       this.articles = res;
+      console.log(res);
       // @ts-ignore
       this.articles.forEach(v => {
         if (v.upvoted_by.includes(LocalStorageUtil.getStorage().id)) {

@@ -38,6 +38,7 @@ export class AllUsersComponent implements OnInit {
       res.forEach((val: any) => {
         this.users.push(val);
       })
+      console.log(res);
       this.users = res;
       this.addRole(this.users);
     }, error => {

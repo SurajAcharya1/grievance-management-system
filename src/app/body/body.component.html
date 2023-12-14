@@ -4,7 +4,7 @@
       <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let article of articles; let i = index"
            (click)="getRelatedArticles(article?.id, article?.title)" [ngbTooltip]="((article?.author === loggedInUserId) && !isAdmin) ? 'Your Article' : ''">
         <div class="card card-body shadow card-main pe-5" [ngStyle]="{'background' : article?.id === relatedArticleId ? '#eceefd' : ''}"
-             [ngStyle]="{'background' :  i%2 === 0 ? '#deefe3' : ''}">
+             [ngStyle]="{'background' :  (isAdmin && article?.completed_articles_count > 2) ? '#deefe3' : ''}">
           <div class="row">
             <div [ngClass]="i%2 === 0 ? 'col-md-11-point-5 row' : 'col-md-12 row'">
               <div class="align-content-center" [ngClass]=" isAdmin ? '' : 'col-md-1'">
@@ -42,7 +42,7 @@
                       <div *ngIf="isAdmin" class="col-md-5">
                         <button class="approve-button mb-3" ngbTooltip="Resolve Grievance"
                                 (click)="completeArticle(article?.id, $event)">
-                          <strong>Complete</strong>
+                          <strong>Resolve</strong>
                         </button>
                       </div>
                       <div class="d-flex justify-content-end">
@@ -53,9 +53,9 @@
                       </div>
                     </div>
                   </div>
-                  <div *ngIf="article?.author === loggedInUserId && !isAdmin"
-                       class="col-md-1 d-flex justify-content-end">
-                    <div class="me-2">
+                  <div class="col-md-1 d-flex justify-content-end">
+                    <div *ngIf="article?.author === loggedInUserId && !isAdmin"
+                        class="me-2">
                       <span class="fa-solid fa-flag" style="color: #3d5af1"></span>
                     </div>
                     <div class="d-flex justify-content-end" *ngIf="article?.content.length > 115 && !isAdmin">
@@ -97,8 +97,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-point-5" *ngIf="i%2 === 0">
-              <span class="ps-2 fa fa-regular fa-star" style="color: #3d5af1" ngbTooltip="{{i}} genuine grievances posted by this user in the past">{{i}}</span>
+            <div class="col-md-point-5" *ngIf="(isAdmin && article?.completed_articles_count > 2)">
+              <span class="ps-2 fa fa-regular fa-star" style="color: #3d5af1" ngbTooltip="{{article?.completed_articles_count}} genuine grievances posted by this user in the past">{{article?.completed_articles_count}}</span>
             </div>
           </div>
         </div>
@@ -253,13 +253,13 @@
                       </div>
                       <div class="d-flex justify-content-end mt-3">
                         <button style="border: 1px solid #3d5af1; border-radius: 50%; background-color: #ffffff" ngbTooltip="Expand / Collapse"
-                                *ngIf="similar?.content.length > 115">
+                                *ngIf="similar?.content.length > 90">
                           <span [ngClass]="!isNotCollapsedSimilar[ii] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="similarCollapse(ii, $event)"></span>
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div *ngIf="!isNotCollapsedSimilar[ii] && similar?.content.length > 50">
+                  <div *ngIf="!isNotCollapsedSimilar[ii] && similar?.content.length > 90">
                     <div class="row">
                       <div class="col-md-11">
                     <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
@@ -270,7 +270,7 @@
                     </div>
                   </div>
                   <ng-container>
-                    <div [ngbCollapse]="!isNotCollapsedSimilar[ii] && similar?.content.length > 115">
+                    <div [ngbCollapse]="!isNotCollapsedSimilar[ii] && similar?.content.length > 90">
                       <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{similar?.content}}</p>
                     </div>
                   </ng-container>

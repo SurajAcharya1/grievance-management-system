@@ -50,12 +50,13 @@ export class TopBarComponent implements OnInit {
   }
 
   autoLogOut() {
-     this.timer = setTimeout(() => {
-      const expDate = new Date(LocalStorageUtil.getStorage()?.exp);
+    setTimeout(() => {
+      const expDate = new Date(LocalStorageUtil.getStorage()?.exp).getTime();
       const currdate = new Date().getTime();
-       console.log(expDate.getTime());
-       console.log(new Date().getTime);
-       if (expDate.getTime() < currdate) {
+      console.log(expDate);
+      console.log(currdate);
+      console.log('diff:: ', (expDate - currdate));
+      if (expDate < currdate) {
         this.modal.open(TimeoutComponent);
       }
     }, new Date(LocalStorageUtil.getStorage()?.exp).getTime() - new Date().getTime());

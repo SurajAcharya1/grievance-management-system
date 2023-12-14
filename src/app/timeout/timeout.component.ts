@@ -48,7 +48,7 @@ export class TimeoutComponent implements OnInit {
       this.apiService.login(userCredentials).subscribe(res => {
         token = res;
         this.modal.dismissAll();
-        this.getUser(token.jwt);
+        this.getUser(token);
       }, error => {
         this.router.navigate([''])
         this.modal.dismissAll();
@@ -57,7 +57,7 @@ export class TimeoutComponent implements OnInit {
       });
     }
   }
-  getUser(token: string) {
+  getUser(token: any) {
     this.apiService.getLoggedInUserDetails().subscribe(res => {
       this.userDetails = res;
       const storage = LocalStorageUtil.getStorage();
@@ -66,7 +66,8 @@ export class TimeoutComponent implements OnInit {
       storage.email = this.userDetails.email;
       storage.is_admin = this.userDetails.is_admin;
       storage.is_approved = this.userDetails.is_approved;
-      storage.token = token;
+      storage.token = token.jwt;
+      storage.exp = token.exp
       LocalStorageUtil.setStorage(storage);
       this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
       /*if (LocalStorageUtil.getStorage().is_admin) {
