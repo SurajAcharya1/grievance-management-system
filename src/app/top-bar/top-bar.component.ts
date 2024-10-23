@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {TimeoutComponent} from "../timeout/timeout.component";
 import {NgToastService} from "ng-angular-popup";
+import {ApiService} from "../../apiService";
 
 @Component({
   selector: 'app-top-bar',
@@ -13,24 +14,28 @@ import {NgToastService} from "ng-angular-popup";
 })
 
 export class TopBarComponent implements OnInit {
-  @Input() hasArticle: boolean = false;
-  @Output() getSearchKeyWord: EventEmitter<any> = new EventEmitter<any>();
+  @Input() showSearchBar: boolean = false;
   currentUser!: string;
   isAdmin!: boolean;
   timer: any;
 
   searchForm: FormGroup = new FormGroup<any>({});
+  expanded = true;
+  backgroundColor = '';
+  textColor = '';
 
   constructor(private formBuilder: FormBuilder,
-              private router: Router,
               private modal: NgbModal,
-              private toast: NgToastService) { }
+              private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.buildForm();
     this.currentUser = LocalStorageUtil.getStorage().name;
     this.isAdmin = LocalStorageUtil.getStorage().is_admin;
     this.autoLogOut();
+    this.backgroundColor = this.getRandomBackgroundColor();
+    this.textColor = this.getRandomTextColor(this.backgroundColor);
+
   }
 
   /*signOut() {
@@ -40,7 +45,7 @@ export class TopBarComponent implements OnInit {
   }*/
 
   search() {
-    this.getSearchKeyWord.emit(this.searchForm.get('searchKeyWord')?.value);
+    this.apiService.searchKeyWord.next(this.searchForm.get('searchKeyWord')?.value);
   }
 
   buildForm() {
@@ -60,5 +65,25 @@ export class TopBarComponent implements OnInit {
         this.modal.open(TimeoutComponent);
       }
     }, new Date(LocalStorageUtil.getStorage()?.exp).getTime() - new Date().getTime());
+  }
+  expandCollapse() {
+    this.expanded = !this.expanded;
+    this.apiService.sideBarExpanded.next(this.expanded);
+  }
+
+  getRandomBackgroundColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  getRandomTextColor(color: string) {
+    let colorValue = parseInt(color.slice(1), 16);
+    let invertedColorValue = 0xFFFFFF ^ colorValue;
+    let invertedColor = "#" + invertedColorValue.toString(16).padStart(6, '0');
+    return invertedColor;
   }
 }

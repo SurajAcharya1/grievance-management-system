@@ -1,5 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,10 @@ import {Injectable} from "@angular/core";
 export class ApiService {
 
   public static readonly baseApi = 'http://localhost:8000/api/';
+
+  public sideBarExpanded = new BehaviorSubject<boolean> (true);
+  public showSearchBar = new BehaviorSubject<boolean> (false);
+  public searchKeyWord = new Subject<string> ();
 
   constructor(private httpClient: HttpClient) {
   }
@@ -86,6 +91,10 @@ export class ApiService {
 
   updateArticle(id: number, data: any) {
     return this.httpClient.put(ApiService.baseApi + 'articles/' + id + '/edit/', data, {withCredentials: true});
+  }
+
+  getSideBarExpanded(expanded: boolean) {
+    return this.sideBarExpanded.next(expanded);
   }
 
 }

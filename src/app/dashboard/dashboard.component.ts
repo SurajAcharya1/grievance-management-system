@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ApiService} from "../../apiService";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,10 +9,18 @@ import {Component, OnInit} from '@angular/core';
 export class DashboardComponent implements OnInit {
 
   searchKeyWord: any;
+  expanded = true;
+  showSearchBar = false;
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.sideBarExpanded.subscribe(value => {
+      this.expanded = value;
+    });
+    this.apiService.showSearchBar.subscribe(value => {
+      this.showSearchBar = value;
+    });
   }
 
   getSearchKeyWord(searchKeyWord: any) {

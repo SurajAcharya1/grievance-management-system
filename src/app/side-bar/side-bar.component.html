@@ -1,22 +1,63 @@
-<div class="sidebar scrollable-section">
-  <div class="sidebar-header">
-    <span style="margin-left: 2rem; font-size: 22px">MENU</span>
-  </div>
+<div class="sidebar scrollable-section mt-5">
   <div class="sidebar-nav ps-4" *ngIf="!isAdmin">
-    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
-    <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" ><span class="fa fa-pen-to-square me-2"></span>Post Grievance</div>
-    <div class="mb-3" [routerLink]="['/my-grievances']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>My Grievance</div>
-    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
-  </div>
-  <div class="sidebar-nav ps-4" *ngIf="isAdmin">
-    <div class="mb-3" [routerLink]="['/admin-dashboard']" routerLinkActive="active"><span class="fa fa-home me-2"></span>Dashboard</div>
-    <div class="mb-3" [routerLink]="['/users']" routerLinkActive="active"><span class="fa fa-users me-2"></span>Users</div>
-    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>Pending Grievance</div>
-    <div class="mb-3" [routerLink]="['/user-approval-request']" routerLinkActive="active" ><span class="fa fa-user-plus me-2"></span>Approval Requests</div>
-    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
-  </div>
-  <!--<div class="d-flex align-content-end" style="top: 15rem">
-  </div>-->
+    <div class="mb-3" [routerLink]="['/user/dashboard']" routerLinkActive="active" (click)="showSearchBar(true)"
+         title="Home">
+      <span class="fa fa-house me-2"></span>
+      <span *ngIf="expanded">Home</span>
+    </div>
 
-  <div (click)="signOut()" style="cursor: pointer; position: absolute; top: 40rem"><i class="fa-solid fa-right-from-bracket me-2 ps-4"></i>Sign Out</div>
+    <div class="mb-3" [routerLink]="['/user/post-grievance']" routerLinkActive="active" (click)="showSearchBar()"
+         title="Post Grievance">
+      <span class="fa fa-pen-to-square me-2"></span>
+      <span *ngIf="expanded">Post Grievance</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/user/my-grievances']" routerLinkActive="active" (click)="showSearchBar(true)"
+         title="My Grievance">
+      <span class="fa fa-layer-group me-2"></span>
+      <span *ngIf="expanded">My Grievance</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/user/account']" routerLinkActive="active" (click)="showSearchBar()"
+         title="Account">
+      <span class="fa fa-address-book me-2"></span>
+      <span *ngIf="expanded">Account</span>
+    </div>
+  </div>
+
+  <div class="sidebar-nav ps-4" *ngIf="isAdmin">
+    <div class="mb-3" [routerLink]="['/admin/dashboard']" routerLinkActive="active" (click)="showSearchBar()"
+         title="Dashboard">
+      <span class="fa fa-home me-2"></span>
+      <span *ngIf="expanded">Dashboard</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/admin/users']" routerLinkActive="active" (click)="showSearchBar()" title="Users">
+      <span class="fa fa-users me-2"></span>
+      <span *ngIf="expanded">Users</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/admin/pending-grievances']" routerLinkActive="active"
+         (click)="showSearchBar(true)" title="Pending Grievance">
+      <span class="fa fa-layer-group me-2"></span>
+      <span *ngIf="expanded">Pending Grievance</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/admin/user-approval-request']" routerLinkActive="active"
+         (click)="showSearchBar()" title="Approval Requests">
+      <span class="fa fa-user-plus me-2"></span>
+      <span *ngIf="expanded">Approval Requests</span>
+    </div>
+
+    <div class="mb-3" [routerLink]="['/admin/account']" routerLinkActive="active" (click)="showSearchBar()"
+         title="Account">
+      <span class="fa fa-address-book me-2"></span>
+      <span *ngIf="expanded">Account</span>
+    </div>
+  </div>
+
+  <div (click)="signOut()" style="cursor: pointer; position: absolute; top: 40rem" title="Sign Out">
+    <i class="fa-solid fa-right-from-bracket me-2" style="padding-left: 2rem"></i>
+    <span *ngIf="expanded">Sign Out</span>
+  </div>
 </div>

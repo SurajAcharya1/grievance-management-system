@@ -22,6 +22,7 @@ body {
 .sidebar-nav {
   list-style: none;
   padding: 0;
+  margin-right: 10px;
 }
 
 .sidebar-nav div {
@@ -33,6 +34,7 @@ body {
 .sidebar-nav div {
   color: #000;
   text-decoration: none;
+  height: fit-content;
 }
 
 .sidebar-nav div:hover {

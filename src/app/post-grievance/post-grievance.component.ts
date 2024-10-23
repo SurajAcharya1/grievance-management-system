@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {ApiService} from "../../apiService";
 import {NgToastService} from "ng-angular-popup";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-post-grievance',
@@ -16,7 +17,8 @@ export class PostGrievanceComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private  apiService: ApiService,
-              private toastr: NgToastService) { }
+              private toastr: NgToastService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -42,14 +44,17 @@ export class PostGrievanceComponent implements OnInit {
         author: LocalStorageUtil.getStorage().id,
         stay_anonymous: this.postGrievance.get('stayAnonymous')?.value
       }
+      this.spinner.show();
       this.apiService.postArticle(article).subscribe(res => {
         this.toastr.success({detail: 'Success', summary: 'Posted Grievance Successfully.', duration: 2000});
         this.postGrievance.get('title')?.patchValue(null);
         this.postGrievance.get('description')?.patchValue(null);
         this.isSubmitted = false;
+        this.spinner.hide();
       }, error => {
         console.log(error);
-        this.toastr.error({detail: 'Error', summary: 'Failed posting grievance', duration: 2000})
+        this.toastr.error({detail: 'Error', summary: 'Failed posting grievance', duration: 2000});
+        this.spinner.hide();
       });
 
     }

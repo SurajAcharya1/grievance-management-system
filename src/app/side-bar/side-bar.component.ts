@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LocalStorageUtil} from "../../localStorageUtil";
 import {Router} from "@angular/router";
 import {NgToastService} from "ng-angular-popup";
@@ -12,10 +12,11 @@ import {ApiService} from "../../apiService";
 export class SideBarComponent implements OnInit {
 
   isAdmin: boolean = false;
+  expanded = true;
 
   constructor(private router: Router,
               private toastr: NgToastService,
-              private apiService: ApiService) { }
+              private apiService: ApiService,) { }
 
   ngOnInit(): void {
     if (LocalStorageUtil.getStorage().is_admin) {
@@ -23,6 +24,9 @@ export class SideBarComponent implements OnInit {
     } else {
       this.isAdmin = false;
     }
+    this.apiService.sideBarExpanded.subscribe(res => {
+      this.expanded = res;
+    });
   }
 
   signOut() {
@@ -36,4 +40,7 @@ export class SideBarComponent implements OnInit {
     this.toastr.success({summary: 'Success', detail: 'Logged Out Successfully', duration: 2000})
   }
 
+  showSearchBar(showSearchBar = false) {
+    this.apiService.showSearchBar.next(showSearchBar);
+  }
 }

@@ -26,8 +26,9 @@ import { AccountComponent } from './account/account.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { MyGrievanceComponent } from './my-grievance/my-grievance.component';
 import { ErrorComponent } from './error/error.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, TitleCasePipe} from "@angular/common";
 import { TimeoutComponent } from './timeout/timeout.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TimeoutComponent } from './timeout/timeout.component';
     MyGrievanceComponent,
     ErrorComponent,
     TimeoutComponent,
+    ChartComponent
   ],
     imports: [
         BrowserModule,
@@ -73,6 +75,7 @@ import { TimeoutComponent } from './timeout/timeout.component';
     ],
   providers: [
     DatePipe,
+    TitleCasePipe
   ],
   bootstrap: [AppComponent]
 })

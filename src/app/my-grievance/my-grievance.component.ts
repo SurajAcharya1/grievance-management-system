@@ -37,9 +37,11 @@ export class MyGrievanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMyArticles();
+    this.getSearchKeyWord();
   }
 
   getMyArticles() {
+    this.spinner.show();
     this.apiService.getAllArticles().subscribe((res: any) => {
       res.forEach((val: any) => {
         this.allArticles.push(val);
@@ -47,9 +49,11 @@ export class MyGrievanceComponent implements OnInit {
       this.allArticles.filter(value => {value.author === this.userId ? this.myArticles.push(value) : ''})
       console.log(this.userId);
       console.log('my articles::::', this.myArticles);
+      this.spinner.hide();
     }, error => {
       console.log(error);
-      this.toastr.success({summary: 'Error', detail: 'Error getting My Grievances', duration: 2000})
+      this.toastr.success({summary: 'Error', detail: 'Error getting My Grievances', duration: 2000});
+      this.spinner.hide();
     })
   }
 
@@ -133,9 +137,11 @@ export class MyGrievanceComponent implements OnInit {
     });
   }
 
-  getSearchKeyWord(searchKeyword: any) {
-    this.searchKeyword = searchKeyword;
-    this.filteredArticle = this.myArticles.filter(value => value.title.toUpperCase().includes(searchKeyword.toUpperCase()));
+  getSearchKeyWord() {
+    this.apiService.searchKeyWord.subscribe(res => {
+    this.searchKeyword = res;
+    this.filteredArticle = this.myArticles.filter(value => value.title.toUpperCase().includes(res.toUpperCase()));
+    });
   }
 
   seeAll() {

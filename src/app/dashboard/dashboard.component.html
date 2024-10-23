@@ -1,13 +1,13 @@
 <div class="dashboard-background">
   <div>
-    <app-top-bar [hasArticle]="true" (getSearchKeyWord)="getSearchKeyWord($event)" ></app-top-bar>
+    <app-top-bar [showSearchBar]="showSearchBar"></app-top-bar>
   </div>
-  <div class="row">
-    <div class="col-md-2">
+  <div style="flex: 1; display: flex;">
+    <div style="width: fit-content;">
       <app-side-bar></app-side-bar>
     </div>
-    <div class="col-md-10">
-      <app-body [searchKeyWord]="searchKeyWord"></app-body>
+    <div style="flex-grow: 1;" class="scrollable-section">
+        <router-outlet></router-outlet>
     </div>
   </div>
 </div>

@@ -29,7 +29,7 @@ export class TimeoutComponent implements OnInit {
 
   buildForm() {
     this.timeOutForm = this.formBuilder.group({
-      password: [undefined, [Validators.required, Validators.minLength(8)]]
+      password: [undefined, [Validators.required]]
     })
   }
 
@@ -50,6 +50,12 @@ export class TimeoutComponent implements OnInit {
         this.modal.dismissAll();
         this.getUser(token);
       }, error => {
+        LocalStorageUtil.clearStorage();
+        this.apiService.logout().subscribe(res => {
+          console.log(res);
+        }, error => {
+          console.log(error);
+        });
         this.router.navigate([''])
         this.modal.dismissAll();
         this.toastService.error({detail: 'error', summary: 'Enter valid credentials', duration: 2000});

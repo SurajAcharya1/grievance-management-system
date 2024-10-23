@@ -9,7 +9,6 @@
 
 .scrollable-section {
   overflow: auto;
-  height: 90vh;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
@@ -31,4 +30,11 @@
   height: 30px;
   width: 100px;
   margin-top: -0.2rem;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
 }

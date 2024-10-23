@@ -17,7 +17,6 @@ export enum Vote {
 
 export class BodyComponent implements OnInit {
 
-  @Input() searchKeyWord: any;
   @Input() event!: Event;
 
   articles: any;
@@ -42,6 +41,7 @@ export class BodyComponent implements OnInit {
   ngOnInit(): void {
     this.getArticles();
     this.isAdmin =  LocalStorageUtil.getStorage().is_admin ? true : false;
+    this.search();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -51,6 +51,7 @@ export class BodyComponent implements OnInit {
   }
 
   getArticles() {
+    this.spinner.show();
     this.apiService.getArticles().subscribe(res => {
       this.articles = res;
       console.log(res);
@@ -70,9 +71,11 @@ export class BodyComponent implements OnInit {
           this.hasDownVoted.push(false);
         }
       });
+      this.spinner.hide();
     }, (error) => {
       console.log(error);
       this.toastService.error({detail: 'Error', summary: 'could not update vote', duration: 2000});
+      this.spinner.hide();
       })
   }
 
@@ -159,8 +162,10 @@ export class BodyComponent implements OnInit {
   }
 
   search() {
+    this.apiService.searchKeyWord.subscribe(res => {
     this.isSearched = true;
-    this.filteredArticles = this.articles.filter((value: any) => value.title.toUpperCase().includes(this.searchKeyWord.toUpperCase()));
+    this.filteredArticles = this.articles.filter((value: any) => value.title.toUpperCase().includes(res.toUpperCase()));
+    });
   }
 
   seeAll() {

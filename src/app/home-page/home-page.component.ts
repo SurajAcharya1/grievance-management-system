@@ -6,6 +6,7 @@ import {ApiService} from "../../apiService";
 import {LocalStorageEmail, LocalStorageUtil} from "../../localStorageUtil";
 import {NgToastService} from "ng-angular-popup";
 import {ToastrService} from "ngx-toastr";
+import {TimeoutComponent} from "../timeout/timeout.component";
 
 @Component({
   selector: 'app-home-page',
@@ -42,6 +43,7 @@ export class HomePageComponent {
   }
 
   buildForm() {
+    this.hasClickedRememberMe();
     this.loginForm = this.formBuilder.group({
       email: [undefined, [Validators.required, Validators.email]],
       password: [undefined, [Validators.required]],
@@ -93,9 +95,9 @@ export class HomePageComponent {
       LocalStorageUtil.setStorage(storage);
       this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
       if (LocalStorageUtil.getStorage().is_admin) {
-        this.router.navigate(['admin-dashboard']);
+        this.router.navigate(['admin/dashboard']);
       } else {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['user/dashboard']);
       }
     }, error => {
       console.log(error);
@@ -104,5 +106,20 @@ export class HomePageComponent {
 
   onToggle() {
     this.toggled ? this.toggled = false : this.toggled = true;
+  }
+
+  hasClickedRememberMe() {
+    if (LocalStorageUtil.getEmailStorage().rememberMeEmail) {
+      const localStorage = LocalStorageUtil.getStorage();
+      const expDate = new Date(localStorage?.exp).getTime();
+      const currdate = new Date().getTime();
+      if (expDate > currdate) {
+        if (localStorage?.is_admin) {
+            this.router.navigate(['admin/dashboard']);
+        } else {
+          this.router.navigate(['user/dashboard']);
+        }
+      }
+    }
   }
 }
