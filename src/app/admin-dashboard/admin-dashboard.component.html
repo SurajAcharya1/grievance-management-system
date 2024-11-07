@@ -1,6 +1,6 @@
 <div style="font-family: 'Poppins', sans-serif" *ngIf="!isLoading">
   <div class="row col-md-12 mt-4 mb-4" style="height: 15%">
-    <div class="col-md-4" [routerLink]="['/dashboard']">
+    <div class="col-md-4" [routerLink]="['/admin/dashboard']">
       <div class="card card-body round me-5 ms-4 shadow" style="border: none">
         <div class="row">
           <div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4" [routerLink]="['/users']">
+    <div class="col-md-4" [routerLink]="['/admin/users']">
       <div class="card card-body round me-5 ms-4 shadow-lg" style="border: none">
         <div class="row">
           <div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4" [routerLink]="['/user-approval-request']">
+    <div class="col-md-4" [routerLink]="['/admin/user-approval-request']">
       <div class="card card-body shadow round me-5 ms-4" style="border: none">
         <div class="row">
           <div class="col-md-2 d-flex align-items-center justify-content-center">

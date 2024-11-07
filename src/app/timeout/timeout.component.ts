@@ -24,6 +24,7 @@ export class TimeoutComponent implements OnInit {
               private modal: NgbModal) { }
 
   ngOnInit(): void {
+    this.apiService.timeoutPopupActive = true;
     this.buildForm();
   }
 
@@ -34,7 +35,6 @@ export class TimeoutComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.timeOutForm.get('password')?.value);
     this.isSubmitted = true;
     if (this.timeOutForm.invalid) {
       return
@@ -76,6 +76,7 @@ export class TimeoutComponent implements OnInit {
       storage.exp = token.exp
       LocalStorageUtil.setStorage(storage);
       this.toastService.success({detail: 'success', summary: 'logged in successfully', duration: 2000});
+      this.apiService.reLoginComplete.next(true);
       /*if (LocalStorageUtil.getStorage().is_admin) {
         this.router.navigate(['admin-dashboard']);
       } else {

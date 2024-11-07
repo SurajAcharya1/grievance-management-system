@@ -11,7 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { BodyComponent } from './body/body.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NgToastModule} from "ng-angular-popup";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
@@ -29,6 +29,7 @@ import { ErrorComponent } from './error/error.component';
 import {DatePipe, TitleCasePipe} from "@angular/common";
 import { TimeoutComponent } from './timeout/timeout.component';
 import { ChartComponent } from './chart/chart.component';
+import {AuthInterceptorService} from "../AuthInterceptorService";
 
 @NgModule({
   declarations: [
@@ -75,7 +76,12 @@ import { ChartComponent } from './chart/chart.component';
     ],
   providers: [
     DatePipe,
-    TitleCasePipe
+    TitleCasePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

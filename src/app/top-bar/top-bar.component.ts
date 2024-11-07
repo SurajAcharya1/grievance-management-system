@@ -30,8 +30,6 @@ export class TopBarComponent implements OnInit {
     this.buildForm();
     this.currentUser = LocalStorageUtil.getStorage().name;
     this.isAdmin = LocalStorageUtil.getStorage().is_admin;
-    this.autoLogOut();
-
   }
 
   /*signOut() {
@@ -48,19 +46,6 @@ export class TopBarComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       searchKeyWord: [undefined]
     })
-  }
-
-  autoLogOut() {
-    setTimeout(() => {
-      const expDate = new Date(LocalStorageUtil.getStorage()?.exp).getTime();
-      const currdate = new Date().getTime();
-      console.log(expDate);
-      console.log(currdate);
-      console.log('diff:: ', (expDate - currdate));
-      if (expDate < currdate) {
-        this.modal.open(TimeoutComponent);
-      }
-    }, new Date(LocalStorageUtil.getStorage()?.exp).getTime() - new Date().getTime());
   }
   expandCollapse() {
     this.expanded = !this.expanded;

@@ -1,5 +1,5 @@
-<div class="sidebar scrollable-section mt-5">
-  <div class="sidebar-nav" *ngIf="!isAdmin" [ngClass]="expanded ? 'ps-4' : 'ps-1'">
+<div class="sidebar scrollable-section mt-4">
+  <div class="sidebar-nav ps-2" *ngIf="!isAdmin">
     <div class="mb-3" [routerLink]="['/user/dashboard']" routerLinkActive="active" (click)="showSearchBar(true)"
          title="Home">
       <span class="fa fa-house me-2"></span>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="sidebar-nav" *ngIf="isAdmin" [ngClass]="expanded ? 'ps-4' : 'ps-0'">
+  <div class="sidebar-nav ps-2" *ngIf="isAdmin">
     <div class="mb-3" [routerLink]="['/admin/dashboard']" routerLinkActive="active" (click)="showSearchBar()"
          title="Dashboard">
       <span class="fa fa-home me-2"></span>

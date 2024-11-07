@@ -28,10 +28,7 @@ body {
 .sidebar-nav div {
   padding: 10px;
   width: 100%;
-  height: 40px;
-}
-
-.sidebar-nav div {
+  border-radius: 5px;
   color: #000;
   text-decoration: none;
   height: fit-content;
