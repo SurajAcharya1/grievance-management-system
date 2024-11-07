@@ -1,5 +1,5 @@
 <div class="sidebar scrollable-section mt-5">
-  <div class="sidebar-nav ps-4" *ngIf="!isAdmin">
+  <div class="sidebar-nav" *ngIf="!isAdmin" [ngClass]="expanded ? 'ps-4' : 'ps-1'">
     <div class="mb-3" [routerLink]="['/user/dashboard']" routerLinkActive="active" (click)="showSearchBar(true)"
          title="Home">
       <span class="fa fa-house me-2"></span>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="sidebar-nav ps-4" *ngIf="isAdmin">
+  <div class="sidebar-nav" *ngIf="isAdmin" [ngClass]="expanded ? 'ps-4' : 'ps-0'">
     <div class="mb-3" [routerLink]="['/admin/dashboard']" routerLinkActive="active" (click)="showSearchBar()"
          title="Dashboard">
       <span class="fa fa-home me-2"></span>
@@ -57,7 +57,7 @@
   </div>
 
   <div (click)="signOut()" style="cursor: pointer; position: absolute; top: 40rem" title="Sign Out">
-    <i class="fa-solid fa-right-from-bracket me-2" style="padding-left: 2rem"></i>
+    <i class="fa-solid fa-right-from-bracket me-2" [ngStyle]=" {'padding-left': expanded ? '2rem' : '0.5rem'} "></i>
     <span *ngIf="expanded">Sign Out</span>
   </div>
 </div>

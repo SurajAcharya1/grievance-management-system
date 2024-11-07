@@ -21,8 +21,6 @@ export class TopBarComponent implements OnInit {
 
   searchForm: FormGroup = new FormGroup<any>({});
   expanded = true;
-  backgroundColor = '';
-  textColor = '';
 
   constructor(private formBuilder: FormBuilder,
               private modal: NgbModal,
@@ -33,8 +31,6 @@ export class TopBarComponent implements OnInit {
     this.currentUser = LocalStorageUtil.getStorage().name;
     this.isAdmin = LocalStorageUtil.getStorage().is_admin;
     this.autoLogOut();
-    this.backgroundColor = this.getRandomBackgroundColor();
-    this.textColor = this.getRandomTextColor(this.backgroundColor);
 
   }
 
@@ -69,21 +65,5 @@ export class TopBarComponent implements OnInit {
   expandCollapse() {
     this.expanded = !this.expanded;
     this.apiService.sideBarExpanded.next(this.expanded);
-  }
-
-  getRandomBackgroundColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
-  getRandomTextColor(color: string) {
-    let colorValue = parseInt(color.slice(1), 16);
-    let invertedColorValue = 0xFFFFFF ^ colorValue;
-    let invertedColor = "#" + invertedColorValue.toString(16).padStart(6, '0');
-    return invertedColor;
   }
 }

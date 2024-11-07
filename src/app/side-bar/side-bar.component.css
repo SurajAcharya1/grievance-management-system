@@ -40,7 +40,7 @@ body {
 .sidebar-nav div:hover {
   color: #3d5af1;
   background-color: #e6edfb;
-  border-left: 10px solid #3d5af1;
+  /*border-left: 10px solid #3d5af1;*/
 }
 
 .sidebar-nav div.active {
