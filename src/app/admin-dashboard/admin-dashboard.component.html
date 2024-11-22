@@ -1,21 +1,59 @@
 <div style="font-family: 'Poppins', sans-serif" *ngIf="!isLoading">
   <div class="row col-md-12 mt-4 mb-4" style="height: 15%">
-    <div class="col-md-4" [routerLink]="['/admin/dashboard']">
+    <div class="col-md-4" [routerLink]="['/admin/pending-grievances']">
       <div class="card card-body round me-5 ms-4 shadow" style="border: none">
         <div class="row">
-          <div class="col-md-2 d-flex align-items-center justify-content-center">
-            <i class="fa fa-solid fa-layer-group fa-2xl"></i>
+          <div class="col-md-12" style="border-bottom: 1px solid gray">
+            <div class="row">
+              <div class="col-md-5 text-end" style="font-size: x-large">
+                <span class="fa fa-layer-group"></span>
+              </div>
+              <div class="col-md-7">
+                <div style="margin-top: -0.8rem">
+                  <strong style="font-size: smaller">Total Grievance</strong>
+                </div>
+                <div style="margin-top: -0.6rem">
+                  <strong style="font-size: xx-large">{{ articles?.length }}</strong>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-md-10">
-            <div><h1><strong>{{ articlesCount }}</strong></h1></div>
-            <div><h6><strong>Pending Grievance</strong></h6></div>
+          <div class="col-md-6 text-center" style="border-right: 1px solid gray; margin-top: 8px">
+            <div>
+              <span style="font-size: xx-large">{{completeCount}}</span>
+            </div>
+            <div style="margin-top: -0.8rem">
+              <span style="font-size: smaller">completed</span>
+            </div>
+            <!--<div class="row">
+              <div class="col-md-6 text-end" style="font-size: x-large">
+                <span class="mt-3 fa fa-layer-group"></span>
+              </div>
+              <div class="col-md-6" style="margin-left: -1.5rem">
+                <div>
+                  <span style="font-size: xx-large">{{incompleteCount}}</span>
+                </div>
+                <div style="margin-top: -0.8rem">
+                  <span style="font-size: smaller">incomplete</span>
+                </div>
+              </div>
+            </div>-->
           </div>
+          <div class="col-md-6 text-center" style="margin-top: 8px">
+            <div>
+              <span style="font-size: xx-large">{{incompleteCount}}</span>
+            </div>
+            <div style="margin-top: -0.8rem">
+              <span style="font-size: smaller">incomplete</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
     <div class="col-md-4" [routerLink]="['/admin/users']">
       <div class="card card-body round me-5 ms-4 shadow-lg" style="border: none">
-        <div class="row">
+        <div class="row mt-3 mb-3">
           <div class="col-md-2 d-flex align-items-center justify-content-center">
             <i class="fa fa-solid fa-users fa-2xl"></i>
           </div>
@@ -28,7 +66,7 @@
     </div>
     <div class="col-md-4" [routerLink]="['/admin/user-approval-request']">
       <div class="card card-body shadow round me-5 ms-4" style="border: none">
-        <div class="row">
+        <div class="row mt-3 mb-3">
           <div class="col-md-2 d-flex align-items-center justify-content-center">
             <i class="fa fa-solid fa-user-plus fa-2xl"></i>
           </div>
@@ -44,7 +82,7 @@
   <div style="margin-right: 3rem; margin-left: 1.5rem; margin-top: 1rem; height: 85%">
     <div class="row col-md-12">
       <div class="col-md-6 p-2">
-        <div class="card shadow">
+        <div class="card shadow" [style]="{'background-color': backgroundColor}">
           <div class="card-header d-flex align-content-end" style="border: none; background: none">
             <div class="row col-md-12" style="margin-right: -1rem">
               <div class="col-md-6">
@@ -57,17 +95,17 @@
               </div>
             </div>
           </div>
-          <div class="card card-body pt-0" style="border: none">
+          <div class="card card-body pt-0" style="border: none" [style]="{'background-color': backgroundColor}">
             <div class="scrollable-section" [ngStyle]="{'height': expanded ? '23vh' : '25.3vh'}">
               <table class="table table-borderless table-hover" style="font-size: 12px">
                 <thead class="border-bottom">
                 <tr>
-                  <th>S.N.</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Created Date</th>
-                  <th>Vote</th>
-                  <th>Status</th>
+                  <th [style]="{'background-color': backgroundColor}">S.N.</th>
+                  <th [style]="{'background-color': backgroundColor}">Title</th>
+                  <th [style]="{'background-color': backgroundColor}">Author</th>
+                  <th [style]="{'background-color': backgroundColor}">Created Date</th>
+                  <th [style]="{'background-color': backgroundColor}">Vote</th>
+                  <th [style]="{'background-color': backgroundColor}">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,9 +113,9 @@
                   *ngFor="let article of sentimentWiseArticles | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
                   (click)="openModel(articleDetail, article.title, article.content, article.is_completed, article.id)">
                   <ng-container>
-                    <td>{{ ((p - 1) * 10) + (i + 1) }}</td>
-                    <td>{{ article.title }}</td>
-                    <td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">{{ ((p - 1) * 10) + (i + 1) }}</td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">{{ article.title }}</td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">
                       <ng-container *ngIf="article?.stay_anonymous; else els">
                         <!--                  <span class="fa fa-solid fa-eye-slash"></span>-->
                         <span style="color: red">Anonymous</span>
@@ -86,10 +124,10 @@
                         {{ article?.author_name }}
                       </ng-template>
                     </td>
-                    <td>{{ article.created_at | date:'MMM dd, yyyy | hh:mm:ss a' }}</td>
-                    <td>{{ article.vote }}</td>
-                    <td [ngStyle]="{ 'color' : article.is_completed ? 'green' : '#3d5af1' }">
-                      <strong>{{ article.is_completed ? 'Completed' : 'Pending' }}</strong></td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">{{ article.created_at | date:'MMM dd, yyyy | hh:mm:ss a' }}</td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">{{ article.vote }}</td>
+                    <td [style]="{'backgroundColor': backgroundColor, 'color': textColor}">
+                      <strong [ngStyle]="{ 'color' : article.is_completed ? 'green' : '#3d5af1' }">{{ article.is_completed ? 'Completed' : 'Pending' }}</strong></td>
                   </ng-container>
                 </tr>
                 </tbody>
@@ -97,7 +135,7 @@
             </div>
           </div>
           <div class="card-footer d-flex justify-content-end pt-1 ps-0 pe-0 pb-0 me-3"
-               style="font-size: 12px; border: none; background: none">
+               style="font-size: 12px; border: none; background: none" [style]="{'color': textColor}">
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
           </div>
         </div>
@@ -106,21 +144,29 @@
         <app-chart *ngIf="articles?.length"
                    [label]="label"
                    [data]="data"
-                   [chartType]="'bar'" (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
+                   [chartType]="'pie'"
+                   [title]="'Grievance Sentiment'"
+                   (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
       </div>
     </div>
     <div class="row col-md-12">
       <div class="col-md-6 p-2">
         <app-chart *ngIf="articles?.length"
                    [label]="label"
-                   [data]="data"
-                   [chartType]="'polarArea'" (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
+                   [data]="barData"
+                   [chartType]="'bar'"
+                   [title]="'Sentiment Wise Completion Graph'"
+                   [curatedDataSent]="true"
+                   (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
       </div>
       <div class="col-md-6 p-2">
         <app-chart *ngIf="articles?.length"
-                   [label]="label"
-                   [data]="data"
-                   [chartType]="'doughnut'" (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
+                   [label]="completionLabel"
+                   [data]="completionData"
+                   [title]="'Completed vs Incomplete Grievances'"
+                   [chartAxis]="'x'"
+                   [chartType]="'doughnut'"
+                   (sentimentTypeEmitter)="sentimentTypeEventHandler($event)"></app-chart>
       </div>
     </div>
   </div>
@@ -153,6 +199,59 @@
     </div>
     <div class="d-flex justify-content-end" *ngIf="openedArticleStatus === 'Pending'">
       <button class="approve-button" (click)="completeArticle(openedArticleId)">Approve</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #completionWiseGrievance>
+  <div class="modal-content pb-3 pe-3">
+    <div class="modal-header" style="display:block">
+      <div (click)="close('completionGrievancesModalRef')" class=" d-flex justify-content-end mb-2">
+        <span style="color: red; cursor: pointer; margin-top: -0.5rem">
+          close
+        </span>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-12">
+          <h5>{{articleCompletionType}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+        <table class="table table-borderless table-hover">
+          <thead class="border-bottom">
+            <tr>
+              <th>S.N.</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Created Date</th>
+              <th>Vote</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let article of completionWiseArticles | paginate: { itemsPerPage: 10, currentPage: completionArticlePage }; let i = index">
+              <ng-container>
+                <td>{{ ((completionArticlePage - 1) * 10) + (i + 1) }}</td>
+                <td>{{ article.title }}</td>
+                <td>
+                  <ng-container *ngIf="article?.stay_anonymous; else els">
+                    <span style="color: red">Anonymous</span>
+                  </ng-container>
+                  <ng-template #els>
+                    {{ article?.author_name }}
+                  </ng-template>
+                </td>
+                <td>{{ article.created_at | date:'MMM dd, yyyy | hh:mm:ss a' }}</td>
+                <td>{{ article.vote }}</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card-footer d-flex justify-content-end pt-1 ps-0 pe-0 pb-0 me-3"
+             style="font-size: 12px; border: none; background: none" [style]="{'color': textColor}">
+          <pagination-controls (pageChange)="completionArticlePage = $event"></pagination-controls>
+        </div>
     </div>
   </div>
 </ng-template>

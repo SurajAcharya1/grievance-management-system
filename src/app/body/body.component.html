@@ -124,7 +124,7 @@
 
   <div [ngClass]="hasPressed ? 'col-md-5 scrollable-section ps-5' : 'col-md-3 scrollable-section'">
     <div class="d-flex justify-content-center" *ngIf="!isAdmin">
-      <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;" [routerLink]="['/post-grievance']">+ Post new Grievance</button>
+      <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;" [routerLink]="['/user/post-grievance']">+ Post new Grievance</button>
     </div>
     <div class="card shadow p-3 d-flex justify-content-center me-3" *ngIf="hasPressed" style="border: none"
     [ngStyle]=" {'margin-top' : isAdmin ? '5rem' : ''} ">

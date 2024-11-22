@@ -71,8 +71,9 @@ export class ForgotPasswordComponent implements OnInit {
           this.forgotPassword.get('verificationCode')?.addValidators(Validators.required);
           this.forgotPassword.get('newPassword')?.addValidators([Validators.required, Validators.minLength(8)]);
         }, error => {
+          console.log(error);
           this.spinner.hide();
-          this.toastr.error({detail: 'Error', summary: 'Error sending verification code', duration: 2000})
+          this.toastr.error({detail: 'Error', summary: error?.error?.detail, duration: 2000})
         });
       }
     }

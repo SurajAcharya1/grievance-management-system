@@ -23,10 +23,16 @@ export class TopBarComponent implements OnInit {
   expanded = true;
 
   constructor(private formBuilder: FormBuilder,
-              private modal: NgbModal,
+              private router: Router,
               private apiService: ApiService) { }
 
   ngOnInit(): void {
+    const url = this.router.url;
+    if (url === '/user/my-grievances' ||
+        url === '/user/dashboard' ||
+        url === '/admin/pending-grievances') {
+      this.showSearchBar = true;
+    }
     this.buildForm();
     this.currentUser = LocalStorageUtil.getStorage().name;
     this.isAdmin = LocalStorageUtil.getStorage().is_admin;

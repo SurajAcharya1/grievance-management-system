@@ -11,12 +11,19 @@ export class ChartComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   chart: any = [];
   @Input() label!: string[];
-  @Input() data!: number[];
+  @Input() data!: any;
   @Input() chartType!: 'bar' | 'bubble' | 'doughnut' | 'line' | 'pie' | 'polarArea' | 'radar' | 'scatter';
+  @Input() chartAxis: 'x' | 'y' = 'x';
+  @Input() curatedDataSent = false;
+  @Input() title = '';
   colorMap = {
     'Positive': 'rgba(75, 192, 192, 1)',
     'Negative': 'rgb(250,80,80, 1)',
     'Neutral': 'rgba(255, 206, 86, 1)',
+  }
+  completionColorMap = {
+    'Complete': 'rgb(37,136,40)',
+    'Incomplete': 'rgb(244,95,107)',
   }
   @Output() sentimentTypeEmitter: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
@@ -29,23 +36,39 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.chart.destroy();
   }
   initializeChart() {
-    const backgroundColor = this.label.map(value => {
-      if (value in this.colorMap) {
-        return this.colorMap[value as keyof typeof this.colorMap];
-      }
-      return 'rgba(0, 0, 0, 0)'; // Default color if not found
-    });
-    const data = {
-      labels: this.label,
-      datasets: [
-        {
-          label: 'Grievance Sentiment',
-          data: this.data,
-          backgroundColor: backgroundColor,
-          borderWidth: 2,
+    let backgroundColor: any;
+    if (this.title === 'Grievance Sentiment') {
+      backgroundColor = this.label.map(value => {
+        if (value in this.colorMap) {
+          return this.colorMap[value as keyof typeof this.colorMap];
         }
-      ],
-    };
+        return 'rgba(0, 0, 0, 0)'; // Default color if not found
+      });
+    } else {
+      backgroundColor = this.label.map(value => {
+        if (value in this.completionColorMap) {
+          return this.completionColorMap[value as keyof typeof this.completionColorMap];
+        }
+        return 'rgba(0, 0, 0, 0)'; // Default color if not found
+      });
+    }
+    console.log(backgroundColor);
+    let data: any;
+    if (!this.curatedDataSent) {
+      data = {
+        labels: this.label,
+        datasets: [
+          {
+            label: 'Grievance Sentiment',
+            data: this.data,
+            backgroundColor: backgroundColor,
+            borderWidth: 2,
+          }
+        ],
+      };
+    } else {
+      data = this.data;
+    }
 
     const ctx = this.canvasRef.nativeElement.getContext('2d');
     if (ctx) {
@@ -53,7 +76,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         type: this.chartType,
         data: data,
         options: {
-          indexAxis: 'y',
+          indexAxis: this.chartAxis,
           scales: {
             y: {
               beginAtZero: true,

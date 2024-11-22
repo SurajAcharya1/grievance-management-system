@@ -21,10 +21,11 @@
   </div>
   <div class="col-md-6 d-flex justify-content-center">
     <ng-container *ngIf="showSearchBar">
-      <form [formGroup]="searchForm" (ngSubmit)="search()" class="w-50">
+      <form [formGroup]="searchForm" class="w-50">
         <input class="form-control"
                style="background: #f3f3f3; margin-top: -1rem; border: none; font-family: 'Font Awesome 5 Free'"
                type="text"
+               (input)="search()"
                formControlName="searchKeyWord"
                placeholder="Search for Complaints">
       </form>
